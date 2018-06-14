@@ -1,6 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import styled, { css } from "styled-components";
+import logo from "./logo.svg";
+import "normalize.css";
+import "./App.css";
+
+const HeaderImage = styled.img`
+  width: ;
+`;
+
+const Button = styled.button`
+  border-radius: 3px;
+  padding: 0.25em 1em;
+  margin: 0 1em;
+  background: transparent;
+  color: black;
+  border: 2px solid palevioletred;
+
+  ${props =>
+    props.primary &&
+    css`
+      border-radius: 10px;
+
+      background: palevioletred;
+      color: #43b2f2;
+    `};
+`;
 
 class App extends Component {
   render() {
@@ -13,6 +37,8 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <Button>Обычная кнопка</Button>
+        <Button primary>Розовая кнопка</Button>
       </div>
     );
   }
