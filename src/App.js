@@ -1,18 +1,15 @@
 import React, { Component } from "react";
-// eslint-disable-next-line
 import styled, { css } from "styled-components";
-// import "normalize";
+import "normalize.css";
 import "flexboxgrid2";
+import "./App.css";
 
 import logo from "./icons/icon-twitter-logo.svg";
-
 import iconHome from "./icons/icon-home.svg";
 import iconMoments from "./icons/icon-moments.svg";
 import iconMessages from "./icons/icon-messages.svg";
 import iconNotifications from "./icons/icon-notifications.svg";
 import iconMagnifier from "./icons/icon-magnifier.svg";
-
-import "./App.css";
 
 const NavIcon = styled.img`
   max-height: 18px;
@@ -49,10 +46,12 @@ const SearchInput = styled.input`
   background-size: 15px 15px;
   background-color: #f5f8fa;
   line-height: 14px;
+  font-size: 12px;
   padding-left: 11px;
   padding-top: 9px;
   padding-bottom: 9px;
   width: 220px;
+  display: inline-block;
 `;
 
 const AvatarImg = styled.img`
@@ -75,12 +74,11 @@ function Avatar(props) {
 
 function ActionButton(props) {
   return (
-    <div className={props.className}>
-      <a href={props.href}>{props.text}</a>
-    </div>
+    <a href={props.href}>
+      <button className={props.className}>{props.text}</button>
+    </a>
   );
 }
-
 const StActionButton = styled(ActionButton)`
   width: 72px;
   height: 32px;
@@ -90,14 +88,118 @@ const StActionButton = styled(ActionButton)`
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
-  margin-left: auto;
-  margin-right: auto;
 `;
 
 const StHeaderImage = styled.img`
   max-width: 100%;
   max-height: 380px;
 `;
+
+const StatsBlockHeader = styled.span`
+  font-size: 12px;
+  font-weight: bold;
+  color: #707e88;
+  text-align: center;
+  display: block;
+`;
+
+const StatsBlockValue = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+  color: #707e88;
+  text-align: center;
+  display: block;
+  ${props =>
+    props.type === "selected" &&
+    css`
+      color: #1da1f2;
+    `};
+`;
+
+function StatsBlock(props) {
+  return (
+    <a className={props.className} href={props.href}>
+      <StatsBlockHeader>{props.header}</StatsBlockHeader>
+      <StatsBlockValue type={props.type}>{props.value}</StatsBlockValue>
+    </a>
+  );
+}
+
+const StStatsBlock = styled(StatsBlock)`
+  padding: 14px 15px 9px 15px;
+  display: inline-block;
+  ${props =>
+    props.type === "selected" &&
+    css`
+      border-bottom-width: 4px;
+      border-bottom-style: solid;
+      border-color: #1da1f2;
+    `};
+`;
+
+const TweetsHeaderItem = styled(TweetsHeader)`
+  padding: 15px 16px 10px 16px;
+  display: inline-block;
+  color: #1da1f2;
+  ${props =>
+    props.selected &&
+    css`
+      color: #000000;
+    `};
+`;
+
+const TweetsHeaderPane = styled.div`
+  background-color: #ffffff;
+  height: 45px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #d8d8d8;
+`;
+
+function TweetsHeader(props) {
+  return (
+    <TweetsHeaderPane>
+      <a href={props.tweetslink}>
+        {/* понятно, что здесь не стоит хардкодить названия, но я пока не разобрался, как передавать массив */}
+        <TweetsHeaderItem>Tweets</TweetsHeaderItem>
+      </a>
+      <a href={props.replieslink}>
+        <TweetsHeaderItem>Tweets & Replies</TweetsHeaderItem>
+      </a>
+      <a href={props.medialink}>
+        <TweetsHeaderItem>Media</TweetsHeaderItem>
+      </a>
+    </TweetsHeaderPane>
+  );
+}
+
+// eslint-disable-next-line
+const TweetWrapper = styled.div`
+  padding: 8px 10px 8px 10px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #d8d8d8;
+`;
+// eslint-disable-next-line
+const TweetContentWrapper = styled.div`
+  margin-left: 60px;
+`;
+
+// eslint-disable-next-line
+
+function Tweet(props) {
+  return <div>ald</div>;
+}
+
+// eslint-disable-next-line
+function Tweets(props) {
+  return (
+    <div className={props.className}>
+      <TweetsHeader />
+      <Tweet />
+    </div>
+  );
+}
 
 class App extends Component {
   render() {
@@ -125,7 +227,7 @@ class App extends Component {
                   src={process.env.PUBLIC_URL + "img/ei-avatar.jpg"}
                   href="./"
                 />
-                <StActionButton text="Tweet" />
+                <StActionButton text="Tweet" href="https://twitter.com" />
               </div>
             </div>
           </div>
@@ -135,6 +237,27 @@ class App extends Component {
           src={process.env.PUBLIC_URL + "img/ei-cover.jpg"}
           alt="everyinteract"
         />
+        <div className="Statistics-pane">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-offset-3 col-lg-6 start-lg">
+                <StStatsBlock header="Tweets" value="8,058" type="selected" />
+                <StStatsBlock header="Following" value="721" />
+                <StStatsBlock header="Followers" value="1,815" />
+                <StStatsBlock header="Likes" value="460" />
+                <StStatsBlock header="Lists" value="2" />
+              </div>
+              <StActionButton text="Follow" href="https://twitter.com" />
+            </div>
+          </div>
+        </div>
+        <main>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-offset-3 col-lg-6 start-lg" />
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
