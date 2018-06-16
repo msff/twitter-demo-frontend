@@ -10,10 +10,24 @@ import {
 import "normalize.css";
 import "flexboxgrid2";
 
+import Stats from "./Stats.js";
+import LeftSection from "./Leftsection";
+
 import pinned from "./icons/icon-pinned.svg";
 
-import { ActionButton } from "./App";
-import Stats from "./Stats.js";
+// Header images
+const StHeaderImage = styled.img`
+  max-width: 100%;
+  max-height: 380px;
+`;
+
+const BigAvatar = styled.img`
+  bottom: 75px;
+  left: 10px;
+  position: absolute;
+  z-index: 3;
+  width: 210px;
+`;
 
 // Main Tweets Components
 
@@ -63,7 +77,7 @@ const TweetContentWrapper = styled.div`
 `;
 
 const Pinned = styled.div`
-  margin-left: 48px;
+  margin-left: 37px;
   margin-bottom: 4px;
 `;
 
@@ -71,6 +85,7 @@ const PinnedIcon = styled.img`
   height: 12px;
   display: inline-block;
   margin-right: 12px;
+  vertical-align: middle;
 `;
 
 const PinnedLabel = styled.span`
@@ -82,7 +97,7 @@ const TweetHeader = styled.div``;
 
 const TweetAvatar = styled.img`
   position: absolute;
-  margin-left: -50px;
+  margin-left: -60px;
   width: 50px;
 `;
 
@@ -99,30 +114,32 @@ const ProfileUserName = styled.span`
 `;
 
 const Caption = styled.p`
-  margin: 0px;
-
+  margin-top: 4px;
+  margin-bottom: 4px;
   font-size: 24px;
   font-weight: 300;
 `;
 
-const tweet1 = {
-  profile: {
-    avatar: "/img/ei-avatar-medium.jpg",
-    fullname: "Every Interaction",
-    username: "@EveryInteract"
-  },
-  caption:
-    "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI"
-};
+const Image = styled.img`
+  margin-top: 13px;
+  margin-bottom: 13px;
+  max-width: 100%;
+  max-height: 250px;
+`;
 
 function Tweet(props) {
   const avatarurl = `${process.env.PUBLIC_URL}${props.tweet.profile.avatar}`;
+  const imageurl = `${process.env.PUBLIC_URL}${props.tweet.img}`;
+
   return (
     <TweetWrapper>
-      <Pinned>
-        <PinnedIcon src={pinned} alt="pinned" />
-        <PinnedLabel>Pinned Tweet</PinnedLabel>
-      </Pinned>
+      {props.tweet.pinned && (
+        <Pinned>
+          <PinnedIcon src={pinned} alt="pinned" />
+          <PinnedLabel>Pinned Tweet</PinnedLabel>
+        </Pinned>
+      )}
+
       <TweetContentWrapper>
         <TweetHeader>
           <TweetAvatar src={avatarurl} />
@@ -131,25 +148,62 @@ function Tweet(props) {
           <ProfileUserName>{props.tweet.profile.username}</ProfileUserName>
         </TweetHeader>
         <Caption>{props.tweet.caption}</Caption>
+        <Image src={imageurl} />
       </TweetContentWrapper>
     </TweetWrapper>
   );
 }
 
+const tweet1 = {
+  pinned: true,
+  profile: {
+    avatar: "/img/ei-avatar-medium.jpg",
+    fullname: "Every Interaction",
+    username: "@EveryInteract"
+  },
+  caption:
+    "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI",
+  img: "/img/tweet-image.jpg"
+};
+
+const tweet2 = {
+  pinned: false,
+  profile: {
+    avatar: "/img/ei-avatar-medium.jpg",
+    fullname: "Every Interaction",
+    username: "@EveryInteract"
+  },
+  caption:
+    "Our new website concept; Taking you from… @ Every Interaction instagram.com/p/BNFGrfhBP3M/",
+  img: ""
+};
+
 function Home(props) {
   return (
-    <div className={props.className}>
+    <div>
+      <StHeaderImage
+        src={process.env.PUBLIC_URL + "/img/ei-cover.jpg"}
+        alt="everyinteract"
+      />
+      <BigAvatar
+        src={process.env.PUBLIC_URL + "/img/ei-avatar-large.png"}
+        alt="everyinteract"
+      />
       <Stats />
       <div className="container">
         <div className="row">
-          <div className="col-lg-offset-3 col-lg-6 start-lg">
+          <div className="col-lg-3 start-lg">
+            <LeftSection />
+          </div>
+          <div className="col-lg-6 start-lg">
             <TweetsNav>
-              <TweetsNavLink to="/tweets">Tweets</TweetsNavLink>
-              <TweetsNavLink to="/replies">Tweets & replies</TweetsNavLink>
-              <TweetsNavLink to="/media">Media</TweetsNavLink>
+              <TweetsNavLink to="#tweets">Tweets</TweetsNavLink>
+              <TweetsNavLink to="#replies">Tweets & replies</TweetsNavLink>
+              <TweetsNavLink to="#media">Media</TweetsNavLink>
             </TweetsNav>
             <TweetsSection>
               <Tweet tweet={tweet1} />
+              <Tweet tweet={tweet2} />
             </TweetsSection>
           </div>
         </div>

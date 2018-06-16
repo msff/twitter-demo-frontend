@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
+  Switch,
   Link,
   NavLink
 } from "react-router-dom";
@@ -37,13 +39,20 @@ export const ActionButton = styled.button`
 class App extends Component {
   render() {
     return (
-      <Router basename="/EveryInteract">
+      <Router>
         <div className="App">
+          <Switch>
+            <Redirect exact from="/" to="/EveryInteract" />
+          </Switch>
           <header>
-            <Header />
+            <Route path="/" component={Header} />
           </header>
           <main>
-            <Route path="/" component={Home} />
+            <Route path="/EveryInteract" component={Home} />
+            <Route path="/home" component={Home} />
+            <Route path="/moments" component={Home} />
+            <Route path="/notifications" component={Home} />
+            <Route path="/messages" component={Home} />
           </main>
         </div>
       </Router>

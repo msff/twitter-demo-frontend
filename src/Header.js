@@ -93,19 +93,19 @@ class Header extends Component {
         <div className="container">
           <div className="row between-lg middle-lg">
             <HeaderElement>
-              <StNavLink to="/">
+              <StNavLink to="/home">
                 <NavIcon src={iconHome} alt="Home" />
                 <NavLabel>Home</NavLabel>
               </StNavLink>
-              <StNavLink to="/">
+              <StNavLink to="/moments">
                 <NavIcon src={iconMoments} alt="Moments" />
                 <NavLabel>Moments</NavLabel>
               </StNavLink>
-              <StNavLink to="/">
+              <StNavLink to="/notifications">
                 <NavIcon src={iconNotifications} alt="Notifications" />
                 <NavLabel>Notifications</NavLabel>
               </StNavLink>
-              <StNavLink to="/">
+              <StNavLink to="/messages">
                 <NavIcon src={iconMessages} alt="Messages" />
                 <NavLabel>Messages</NavLabel>
               </StNavLink>
@@ -116,9 +116,11 @@ class Header extends Component {
             <HeaderElement>
               <SearchInput placeholder="Search Twitter" />
               <NavLink to="/">
-                <Avatar src={process.env.PUBLIC_URL + "/img/ei-avatar.jpg"} />
+                <Avatar
+                  src={process.env.PUBLIC_URL + "/img/ei-avatar-small.jpg"}
+                />
               </NavLink>
-              <NavLink to="/">
+              <NavLink to="/newtweet">
                 <ActionButton>Tweet</ActionButton>
               </NavLink>
             </HeaderElement>
