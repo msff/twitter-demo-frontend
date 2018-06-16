@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
 // eslint-disable-next-line
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink
+} from "react-router-dom";
 import "normalize.css";
 import "flexboxgrid2";
 
@@ -10,6 +15,12 @@ import { ActionButton } from "./App";
 const StHeaderImage = styled.img`
   max-width: 100%;
   max-height: 380px;
+`;
+
+const StatsWrapper = styled.div`
+  background-color: #ffffff;
+  height: 60px;
+  box-shadow: 0px 2px 2px #b0b8be;
 `;
 
 const StatsBlockHeader = styled.span`
@@ -54,7 +65,7 @@ function StatsBlock(props) {
   );
 }
 
-const TweetsHeaderItem = styled(TweetsHeader)`
+const TweetsHeaderItem = styled(NavLink)`
   padding: 15px 16px 10px 16px;
   display: inline-block;
   color: #1da1f2;
@@ -125,7 +136,7 @@ function Home(props) {
         src={process.env.PUBLIC_URL + "img/ei-cover.jpg"}
         alt="everyinteract"
       />
-      <div className="Statistics-pane">
+      <StatsWrapper>
         <div className="container">
           <div className="row">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
@@ -138,14 +149,14 @@ function Home(props) {
             <ActionButton>Follow</ActionButton>
           </div>
         </div>
-      </div>
+      </StatsWrapper>
       <div className="container">
         <div className="row">
           <div className="col-lg-offset-3 col-lg-6 start-lg">
             <Tweet />
           </div>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }

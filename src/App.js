@@ -13,24 +13,6 @@ import "./App.css";
 import Home from "./Home";
 import Header from "./Header";
 
-// function Avatar(props) {
-//   return (
-//     <div>
-//       <a href={props.href}>
-//         <AvatarImg src={props.src} alt="avatar" />
-//       </a>
-//     </div>
-//   );
-// }
-
-// function ActionButton(props) {
-//   return (
-//     <a href={props.href}>
-//       <button className={props.className}>{props.text}</button>
-//     </a>
-//   );
-// }
-
 export const ActionButton = styled.button`
   width: 72px;
   height: 32px;

@@ -73,6 +73,11 @@ const SearchInput = styled.input`
   width: 220px;
 `;
 
+const Logo = styled.img`
+  width: 20px;
+  padding-top: 4px;
+`;
+
 const Avatar = styled.img`
   margin-left: 8px;
   margin-right: 8px;
@@ -106,16 +111,16 @@ class Header extends Component {
               </StNavLink>
             </HeaderElement>
             <HeaderElement>
-              <img src={logo} className="App-logo" alt="logo" />
+              <Logo src={logo} alt="logo" />
             </HeaderElement>
             <HeaderElement>
               <SearchInput placeholder="Search Twitter" />
-              <a href="https://twitter.com">
+              <NavLink to="/">
                 <Avatar src={process.env.PUBLIC_URL + "img/ei-avatar.jpg"} />
-              </a>
-              <a href="https://twitter.com">
+              </NavLink>
+              <NavLink to="/">
                 <ActionButton>Tweet</ActionButton>
-              </a>
+              </NavLink>
             </HeaderElement>
           </div>
         </div>
