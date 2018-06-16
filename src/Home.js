@@ -1,12 +1,6 @@
-import React, { Component } from "react";
-import styled, { css } from "styled-components";
-// eslint-disable-next-line
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import React from "react";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import "normalize.css";
 import "flexboxgrid2";
 
@@ -30,11 +24,6 @@ const BigAvatar = styled.img`
 `;
 
 // Main Tweets Components
-
-const Tweets = styled.div`
-width: 100%
-background-color: #fff;
-`;
 
 const TweetsNavLink = styled(NavLink)`
   padding: 15px 15px 10px 15px;

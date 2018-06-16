@@ -4,10 +4,10 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Switch,
-  Link,
-  NavLink
+  Switch
 } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 import "normalize.css";
 import "flexboxgrid2";
 import "./App.css";
@@ -41,6 +41,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <Helmet>
+            <title>Every Interactive — Twitter</title>
+          </Helmet>
           <Switch>
             <Redirect exact from="/" to="/EveryInteract" />
           </Switch>

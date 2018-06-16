@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-import styled, { css } from "styled-components";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import "normalize.css";
 import "flexboxgrid2";
 
