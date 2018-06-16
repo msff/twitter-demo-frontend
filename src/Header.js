@@ -116,7 +116,7 @@ class Header extends Component {
             <HeaderElement>
               <SearchInput placeholder="Search Twitter" />
               <NavLink to="/">
-                <Avatar src={process.env.PUBLIC_URL + "img/ei-avatar.jpg"} />
+                <Avatar src={process.env.PUBLIC_URL + "/img/ei-avatar.jpg"} />
               </NavLink>
               <NavLink to="/">
                 <ActionButton>Tweet</ActionButton>

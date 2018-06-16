@@ -10,99 +10,48 @@ import {
 import "normalize.css";
 import "flexboxgrid2";
 
+import pinned from "./icons/icon-pinned.svg";
+
 import { ActionButton } from "./App";
+import Stats from "./Stats.js";
 
-const StHeaderImage = styled.img`
-  max-width: 100%;
-  max-height: 380px;
+// Main Tweets Components
+
+const Tweets = styled.div`
+width: 100%
+background-color: #fff;
 `;
 
-const StatsWrapper = styled.div`
-  background-color: #ffffff;
-  height: 60px;
-  box-shadow: 0px 2px 2px #b0b8be;
-`;
-
-const StatsBlockHeader = styled.span`
-  font-size: 12px;
-  font-weight: bold;
-  color: #707e88;
-  text-align: center;
-  display: block;
-`;
-
-const StatsBlockValue = styled.span`
-  font-size: 18px;
-  font-weight: bold;
-  color: #707e88;
-  text-align: center;
-  display: block;
-  ${props =>
-    props.type === "selected" &&
-    css`
-      color: #1da1f2;
-    `};
-`;
-
-const StStatsBlock = styled(StatsBlock)`
-  padding: 14px 15px 9px 15px;
-  display: inline-block;
-  ${props =>
-    props.type === "selected" &&
-    css`
-      border-bottom-width: 4px;
-      border-bottom-style: solid;
-      border-color: #1da1f2;
-    `};
-`;
-
-function StatsBlock(props) {
-  return (
-    <a className={props.className} href={props.href}>
-      <StatsBlockHeader>{props.header}</StatsBlockHeader>
-      <StatsBlockValue type={props.type}>{props.value}</StatsBlockValue>
-    </a>
-  );
-}
-
-const TweetsHeaderItem = styled(NavLink)`
-  padding: 15px 16px 10px 16px;
-  display: inline-block;
+const TweetsNavLink = styled(NavLink)`
+  padding: 15px 15px 10px 15px;
   color: #1da1f2;
-  ${props =>
-    props.selected &&
-    css`
-      color: #000000;
-    `};
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  &.active {
+    color: #000000;
+  }
 `;
 
-const TweetsHeaderPane = styled.div`
+const TweetsNav = styled.div`
+  margin-top: 8px;
   background-color: #ffffff;
-  height: 45px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: #d8d8d8;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
 `;
 
-function TweetsHeader(props) {
-  return (
-    <TweetsHeaderPane>
-      <a href={props.tweetslink}>
-        {/* понятно, что здесь не стоит хардкодить названия, но я пока не разобрался, как передавать массив */}
-        <TweetsHeaderItem>Tweets</TweetsHeaderItem>
-      </a>
-      <a href={props.replieslink}>
-        <TweetsHeaderItem>Tweets & Replies</TweetsHeaderItem>
-      </a>
-      <a href={props.medialink}>
-        <TweetsHeaderItem>Media</TweetsHeaderItem>
-      </a>
-    </TweetsHeaderPane>
-  );
-}
+const TweetsSection = styled.div`
+width: 100%
+background-color: #fff;
+`;
 
 // eslint-disable-next-line
-const TweetWrapper = styled.div`
+const TweetWrapper = styled.section`
   padding: 8px 10px 8px 10px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -113,47 +62,95 @@ const TweetContentWrapper = styled.div`
   margin-left: 60px;
 `;
 
-// eslint-disable-next-line
+const Pinned = styled.div`
+  margin-left: 48px;
+  margin-bottom: 4px;
+`;
+
+const PinnedIcon = styled.img`
+  height: 12px;
+  display: inline-block;
+  margin-right: 12px;
+`;
+
+const PinnedLabel = styled.span`
+  font-size: 12px;
+  color: #707e88;
+`;
+
+const TweetHeader = styled.div``;
+
+const TweetAvatar = styled.img`
+  position: absolute;
+  margin-left: -50px;
+  width: 50px;
+`;
+
+const ProfileFullName = styled.span`
+  color: #292f33;
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const ProfileUserName = styled.span`
+  color: #707e88;
+  font-size: 13px;
+  font-weight: 500;
+`;
+
+const Caption = styled.p`
+  margin: 0px;
+
+  font-size: 24px;
+  font-weight: 300;
+`;
+
+const tweet1 = {
+  profile: {
+    avatar: "/img/ei-avatar-medium.jpg",
+    fullname: "Every Interaction",
+    username: "@EveryInteract"
+  },
+  caption:
+    "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI"
+};
 
 function Tweet(props) {
-  return <div>ald</div>;
-}
-
-// eslint-disable-next-line
-function Tweets(props) {
+  const avatarurl = `${process.env.PUBLIC_URL}${props.tweet.profile.avatar}`;
   return (
-    <div className={props.className}>
-      <TweetsHeader />
-      <Tweet />
-    </div>
+    <TweetWrapper>
+      <Pinned>
+        <PinnedIcon src={pinned} alt="pinned" />
+        <PinnedLabel>Pinned Tweet</PinnedLabel>
+      </Pinned>
+      <TweetContentWrapper>
+        <TweetHeader>
+          <TweetAvatar src={avatarurl} />
+          <ProfileFullName>{props.tweet.profile.fullname}</ProfileFullName>
+          <span>&nbsp;</span>
+          <ProfileUserName>{props.tweet.profile.username}</ProfileUserName>
+        </TweetHeader>
+        <Caption>{props.tweet.caption}</Caption>
+      </TweetContentWrapper>
+    </TweetWrapper>
   );
 }
 
 function Home(props) {
   return (
     <div className={props.className}>
-      <StHeaderImage
-        src={process.env.PUBLIC_URL + "img/ei-cover.jpg"}
-        alt="everyinteract"
-      />
-      <StatsWrapper>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-offset-3 col-lg-6 start-lg">
-              <StStatsBlock header="Tweets" value="8,058" type="selected" />
-              <StStatsBlock header="Following" value="721" />
-              <StStatsBlock header="Followers" value="1,815" />
-              <StStatsBlock header="Likes" value="460" />
-              <StStatsBlock header="Lists" value="2" />
-            </div>
-            <ActionButton>Follow</ActionButton>
-          </div>
-        </div>
-      </StatsWrapper>
+      <Stats />
       <div className="container">
         <div className="row">
           <div className="col-lg-offset-3 col-lg-6 start-lg">
-            <Tweet />
+            <TweetsNav>
+              <TweetsNavLink to="/tweets">Tweets</TweetsNavLink>
+              <TweetsNavLink to="/replies">Tweets & replies</TweetsNavLink>
+              <TweetsNavLink to="/media">Media</TweetsNavLink>
+            </TweetsNav>
+            <TweetsSection>
+              <Tweet tweet={tweet1} />
+            </TweetsSection>
           </div>
         </div>
       </div>

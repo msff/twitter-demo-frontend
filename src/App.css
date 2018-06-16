@@ -1,5 +1,7 @@
 .App {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background-color: #e6ecf0;
+  height: 100%;
 }
 
 .container {

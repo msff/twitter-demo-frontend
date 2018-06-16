@@ -22,6 +22,16 @@ export const ActionButton = styled.button`
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
+  ${props =>
+    props.outline &&
+    css`
+      background-color: #fff;
+      color: #1da1f2;
+      border-color: #1da1f2;
+
+      border-style: solid;
+      border-width: 1px;
+    `};
 `;
 
 class App extends Component {
