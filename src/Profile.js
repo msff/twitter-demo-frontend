@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import "normalize.css";
-import "flexboxgrid2";
 
 import Stats from "./Stats.js";
 import LeftSection from "./Leftsection";
@@ -10,6 +8,7 @@ import LeftSection from "./Leftsection";
 import pinned from "./icons/icon-pinned.svg";
 
 // Header images
+
 const StHeaderImage = styled.img`
   max-width: 100%;
   max-height: 380px;
@@ -49,18 +48,15 @@ const TweetsNav = styled.div`
 `;
 
 const TweetsSection = styled.div`
-width: 100%
-background-color: #fff;
+  width: 100%;
+  background-color: #fff;
 `;
 
-// eslint-disable-next-line
 const TweetWrapper = styled.section`
   padding: 8px 10px 8px 10px;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-color: #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
 `;
-// eslint-disable-next-line
+
 const TweetContentWrapper = styled.div`
   margin-left: 60px;
 `;
@@ -167,7 +163,7 @@ const tweet2 = {
   img: ""
 };
 
-function Home(props) {
+function Profile(props) {
   return (
     <div>
       <StHeaderImage
@@ -201,4 +197,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default Profile;
