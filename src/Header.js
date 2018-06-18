@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import "normalize.css";
-import "flexboxgrid2";
 
 import logo from "./icons/icon-twitter-logo.svg";
 import iconHome from "./icons/icon-home.svg";

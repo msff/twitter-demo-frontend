@@ -12,7 +12,7 @@ import "normalize.css";
 import "flexboxgrid2";
 import "./App.css";
 
-import Home from "./Home";
+import Profile from "./Profile";
 import Header from "./Header";
 
 export const ActionButton = styled.button`
@@ -29,10 +29,7 @@ export const ActionButton = styled.button`
     css`
       background-color: #fff;
       color: #1da1f2;
-      border-color: #1da1f2;
-
-      border-style: solid;
-      border-width: 1px;
+      border: 1px solid #1da1f2;
     `};
 `;
 
@@ -48,14 +45,14 @@ class App extends Component {
             <Redirect exact from="/" to="/EveryInteract" />
           </Switch>
           <header>
-            <Route path="/" component={Header} />
+            <Header />
           </header>
           <main>
-            <Route path="/EveryInteract" component={Home} />
-            <Route path="/home" component={Home} />
-            <Route path="/moments" component={Home} />
-            <Route path="/notifications" component={Home} />
-            <Route path="/messages" component={Home} />
+            <Route path="/EveryInteract" component={Profile} />
+            <Route path="/home" component={Profile} />
+            <Route path="/moments" component={Profile} />
+            <Route path="/notifications" component={Profile} />
+            <Route path="/messages" component={Profile} />
           </main>
         </div>
       </Router>
