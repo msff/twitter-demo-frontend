@@ -22,7 +22,7 @@ const StatsBlockHeader = styled.span`
   display: block;
 `;
 
-const StatsBlockValue = styled(NavLink)`
+const StatsBlockValue = styled.div`
   font-size: 18px;
   font-weight: bold;
   color: #707e88;
@@ -31,19 +31,21 @@ const StatsBlockValue = styled(NavLink)`
   text-decoration: none;
   cursor: pointer;
   width: 100%;
-  padding-bottom: 10px;
+  padding-bottom: 0;
   &.active {
     color: #1da1f2;
-    border-bottom-width: 4px;
-    border-bottom-style: solid;
-    border-color: #1da1f2;
   }
 `;
 
-const StatsBlock = styled.div`
+const StatsBlock = styled(NavLink)`
   padding: 14px 15px 9px 15px;
   display: inline-block;
   color: #1da1f2;
+  text-decoration: none;
+  cursor: pointer;
+  &.active {
+    border-bottom: 4px solid #1da1f2;
+  }
 `;
 
 function Stats(props) {
@@ -53,31 +55,25 @@ function Stats(props) {
         <div className="container">
           <div className="row middle-lg">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
-              <StatsBlock>
+              <StatsBlock to="/EveryInteract/tweets">
                 <StatsBlockHeader>Tweets</StatsBlockHeader>
-                <StatsBlockValue to="/EveryInteract/tweets">
-                  8,058
-                </StatsBlockValue>
+                <StatsBlockValue>8,058</StatsBlockValue>
               </StatsBlock>
-              <StatsBlock>
+              <StatsBlock to="/EveryInteract/following">
                 <StatsBlockHeader>Following</StatsBlockHeader>
-                <StatsBlockValue to="/EveryInteract/following">
-                  721
-                </StatsBlockValue>
+                <StatsBlockValue>721</StatsBlockValue>
               </StatsBlock>
-              <StatsBlock>
+              <StatsBlock to="/EveryInteract/followers">
                 <StatsBlockHeader>Followers</StatsBlockHeader>
-                <StatsBlockValue to="/EveryInteract/followers">
-                  1,815
-                </StatsBlockValue>
+                <StatsBlockValue>1,815</StatsBlockValue>
               </StatsBlock>
-              <StatsBlock>
+              <StatsBlock to="/EveryInteract/likes">
                 <StatsBlockHeader>Likes</StatsBlockHeader>
-                <StatsBlockValue to="/EveryInteract/likes">460</StatsBlockValue>
+                <StatsBlockValue>460</StatsBlockValue>
               </StatsBlock>
-              <StatsBlock>
+              <StatsBlock to="/EveryInteract/lists">
                 <StatsBlockHeader>Lists</StatsBlockHeader>
-                <StatsBlockValue to="/EveryInteract/lists">2</StatsBlockValue>
+                <StatsBlockValue>2</StatsBlockValue>
               </StatsBlock>
             </div>
             <div className="c col-lg-3 end-lg">

@@ -14,12 +14,19 @@ const StHeaderImage = styled.img`
   max-height: 380px;
 `;
 
-const BigAvatar = styled.img`
-  bottom: 75px;
-  left: 10px;
+const BigAvatar = styled.div`
   position: absolute;
+  top: 250px;
   z-index: 3;
   width: 210px;
+  height: 210px;
+
+  border-radius: 100%;
+  border: 1px solid #E7ECF0;
+  background-color: #fff;
+  background-image: url('${props => props.src}');
+  background-size: cover;
+  background-position: center center;
 `;
 
 // Main Tweets Components
@@ -166,14 +173,20 @@ const tweet2 = {
 function Profile(props) {
   return (
     <div>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-3">
+            <BigAvatar
+              src={process.env.PUBLIC_URL + "/img/ei-avatar-large.png"}
+            />
+          </div>
+        </div>
+      </div>
       <StHeaderImage
         src={process.env.PUBLIC_URL + "/img/ei-cover.jpg"}
         alt="everyinteract"
       />
-      <BigAvatar
-        src={process.env.PUBLIC_URL + "/img/ei-avatar-large.png"}
-        alt="everyinteract"
-      />
+
       <Stats />
       <div className="container">
         <div className="row">

@@ -48,8 +48,12 @@ const Follows = styled.span`
   font-weight: normal;
 `;
 
-const Bio = styled.span`
+const Bio = styled.div`
+  margin-top: 13px;
+  margin-bottom: 13px;
+  padding-right: 15px;
   font-size: 14px;
+  line-height: 20px;
   font-color: #14171a;
   font-weight: 400;
 `;

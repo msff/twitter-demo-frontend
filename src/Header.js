@@ -79,6 +79,12 @@ const Avatar = styled.img`
   display: flex;
 `;
 
+const AvatarWrapper = styled(NavLink)`
+  display: flex;
+  align-content: center;
+  align-items: center;
+`;
+
 class Header extends Component {
   render() {
     return (
@@ -108,11 +114,11 @@ class Header extends Component {
             </HeaderElement>
             <HeaderElement>
               <SearchInput placeholder="Search Twitter" />
-              <NavLink to="/">
+              <AvatarWrapper to="/">
                 <Avatar
                   src={process.env.PUBLIC_URL + "/img/ei-avatar-small.jpg"}
                 />
-              </NavLink>
+              </AvatarWrapper>
               <NavLink to="/newtweet">
                 <ActionButton>Tweet</ActionButton>
               </NavLink>
