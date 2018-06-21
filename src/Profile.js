@@ -6,6 +6,10 @@ import Stats from "./Stats.js";
 import LeftSection from "./Leftsection";
 
 import pinned from "./icons/icon-pinned.svg";
+import hearts from "./icons/icon-hearts.svg";
+import replies from "./icons/icon-replies.svg";
+import retweets from "./icons/icon-retweets.svg";
+import direct from "./icons/icon-direct.svg";
 
 // Header images
 
@@ -31,6 +35,8 @@ const BigAvatar = styled.div`
 
 // Main Tweets Components
 
+// Navigation bar
+
 const TweetsNavLink = styled(NavLink)`
   padding: 15px 15px 10px 15px;
   color: #1da1f2;
@@ -38,7 +44,7 @@ const TweetsNavLink = styled(NavLink)`
   text-decoration: none;
   cursor: pointer;
   &.active {
-    color: #000000;
+    color: #ecc069;
   }
 `;
 
@@ -53,6 +59,8 @@ const TweetsNav = styled.div`
   align-content: center;
   justify-content: flex-start;
 `;
+
+// Tweets
 
 const TweetsSection = styled.div`
   width: 100%;
@@ -119,6 +127,30 @@ const Image = styled.img`
   max-height: 250px;
 `;
 
+const ActionWrapper = styled.div`
+  margin-bottom: 3px;
+  max-width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+`;
+
+const ActionBlock = styled.div``;
+
+const ActionIcon = styled.img`
+  max-height: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+  display: inline-block;
+`;
+
+const ActionCount = styled.span`
+  font-weight: 500;
+  font-size: 13px;
+  color: #667580;
+`;
+
 function Tweet(props) {
   const avatarurl = `${process.env.PUBLIC_URL}${props.tweet.profile.avatar}`;
   const imageurl = `${process.env.PUBLIC_URL}${props.tweet.img}`;
@@ -141,6 +173,24 @@ function Tweet(props) {
         </TweetHeader>
         <Caption>{props.tweet.caption}</Caption>
         <Image src={imageurl} />
+        <ActionWrapper>
+          <ActionBlock>
+            <ActionIcon src={replies} />
+            <ActionCount />
+          </ActionBlock>
+          <ActionBlock>
+            <ActionIcon src={retweets} />
+            <ActionCount>74</ActionCount>
+          </ActionBlock>
+          <ActionBlock>
+            <ActionIcon src={hearts} />
+            <ActionCount>18</ActionCount>
+          </ActionBlock>
+          <ActionBlock>
+            <ActionIcon src={direct} />
+            <ActionCount>1</ActionCount>
+          </ActionBlock>
+        </ActionWrapper>
       </TweetContentWrapper>
     </TweetWrapper>
   );
@@ -195,9 +245,9 @@ function Profile(props) {
           </div>
           <div className="col-lg-6 start-lg">
             <TweetsNav>
-              <TweetsNavLink to="#tweets">Tweets</TweetsNavLink>
-              <TweetsNavLink to="#replies">Tweets & replies</TweetsNavLink>
-              <TweetsNavLink to="#media">Media</TweetsNavLink>
+              <TweetsNavLink to="tweets">Tweets</TweetsNavLink>
+              <TweetsNavLink to="replies">Tweets & replies</TweetsNavLink>
+              <TweetsNavLink to="media">Media</TweetsNavLink>
             </TweetsNav>
             <TweetsSection>
               <Tweet tweet={tweet1} />
