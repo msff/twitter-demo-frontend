@@ -202,22 +202,22 @@ function Tweet(props) {
   );
 }
 
-function TweetsFeed(props) {
-  const tweetsfeed = [];
-  props.tweets.forEach(function(tweet, index) {
-    tweetsfeed.push(<Tweet tweet={tweet} key={index} />);
-    console.log({ tweetsfeed });
-  });
-  return tweetsfeed;
-}
-
 // function TweetsFeed(props) {
-//   const tweetsfeed = props.tweets.map(({ tweet }, index) => (
-//     <Tweet key={index} tweet={tweet} />
-//   ));
-//   console.log(tweetsfeed);
+//   const tweetsfeed = [];
+//   props.tweets.forEach(function(tweet, index) {
+//     tweetsfeed.push(<Tweet tweet={tweet} key={index} />);
+//     console.log({ tweetsfeed });
+//   });
 //   return tweetsfeed;
 // }
+
+function TweetsFeed(props) {
+  const tweetsfeed = props.tweets.map((tweet, index) => (
+    <Tweet key={index} tweet={tweet} />
+  ));
+  console.log(tweetsfeed);
+  return tweetsfeed;
+}
 
 const tweets = [
   {
