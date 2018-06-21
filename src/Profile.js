@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import Stats from "./Stats.js";
 import LeftSection from "./Leftsection";
 
 import pinned from "./icons/icon-pinned.svg";
-import hearts from "./icons/icon-hearts.svg";
+import likes from "./icons/icon-hearts.svg";
 import replies from "./icons/icon-replies.svg";
 import retweets from "./icons/icon-retweets.svg";
 import direct from "./icons/icon-direct.svg";
@@ -122,12 +122,14 @@ const Caption = styled.p`
 
 const Image = styled.img`
   margin-top: 13px;
-  margin-bottom: 13px;
+  margin-bottom: 3px;
   max-width: 100%;
   max-height: 250px;
 `;
 
 const ActionWrapper = styled.div`
+  margin-top: 13px;
+
   margin-bottom: 3px;
   max-width: 50%;
   display: flex;
@@ -136,11 +138,15 @@ const ActionWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const ActionBlock = styled.div``;
+const ActionBlock = styled(Link)`
+  text-decoration: none;
+  cursor: pointer;
+`;
 
 const ActionIcon = styled.img`
   max-height: 14px;
-  margin-right: 10px;
+  margin-right: 7px;
+  margin-left: 3px;
   vertical-align: middle;
   display: inline-block;
 `;
@@ -172,23 +178,23 @@ function Tweet(props) {
           <ProfileUserName>{props.tweet.profile.username}</ProfileUserName>
         </TweetHeader>
         <Caption>{props.tweet.caption}</Caption>
-        <Image src={imageurl} />
+        {props.tweet.img && <Image src={imageurl} />}
+
         <ActionWrapper>
-          <ActionBlock>
+          <ActionBlock to={props.tweet + "/reply"}>
             <ActionIcon src={replies} />
-            <ActionCount />
+            <ActionCount>{props.tweet.actions.replies}</ActionCount>
           </ActionBlock>
-          <ActionBlock>
+          <ActionBlock to={props.tweet + "/retweet"}>
             <ActionIcon src={retweets} />
-            <ActionCount>74</ActionCount>
+            <ActionCount>{props.tweet.actions.retweets}</ActionCount>
           </ActionBlock>
-          <ActionBlock>
-            <ActionIcon src={hearts} />
-            <ActionCount>18</ActionCount>
+          <ActionBlock to={props.tweet + "/like"}>
+            <ActionIcon src={likes} />
+            <ActionCount>{props.tweet.actions.likes}</ActionCount>
           </ActionBlock>
-          <ActionBlock>
+          <ActionBlock to={props.tweet + "/send"}>
             <ActionIcon src={direct} />
-            <ActionCount>1</ActionCount>
           </ActionBlock>
         </ActionWrapper>
       </TweetContentWrapper>
@@ -196,29 +202,58 @@ function Tweet(props) {
   );
 }
 
-const tweet1 = {
-  pinned: true,
-  profile: {
-    avatar: "/img/ei-avatar-medium.jpg",
-    fullname: "Every Interaction",
-    username: "@EveryInteract"
-  },
-  caption:
-    "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI",
-  img: "/img/tweet-image.jpg"
-};
+function TweetsFeed(props) {
+  const tweetsfeed = [];
+  props.tweets.forEach(function(tweet, index) {
+    tweetsfeed.push(<Tweet tweet={tweet} key={index} />);
+    console.log({ tweetsfeed });
+  });
+  return tweetsfeed;
+}
 
-const tweet2 = {
-  pinned: false,
-  profile: {
-    avatar: "/img/ei-avatar-medium.jpg",
-    fullname: "Every Interaction",
-    username: "@EveryInteract"
+// function TweetsFeed(props) {
+//   const tweetsfeed = props.tweets.map(({ tweet }, index) => (
+//     <Tweet key={index} tweet={tweet} />
+//   ));
+//   console.log(tweetsfeed);
+//   return tweetsfeed;
+// }
+
+const tweets = [
+  {
+    id: 1,
+    pinned: true,
+    profile: {
+      avatar: "/img/ei-avatar-medium.jpg",
+      fullname: "Every Interaction",
+      username: "@EveryInteract"
+    },
+    caption:
+      "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI",
+    img: "/img/tweet-image.jpg",
+    actions: {}
   },
-  caption:
-    "Our new website concept; Taking you from… @ Every Interaction instagram.com/p/BNFGrfhBP3M/",
-  img: ""
-};
+
+  {
+    id: 2,
+    pinned: false,
+    profile: {
+      avatar: "/img/ei-avatar-medium.jpg",
+      fullname: "Every Interaction",
+      username: "@EveryInteract"
+    },
+    caption:
+      "Our new website concept; Taking you from… @ Every Interaction instagram.com/p/BNFGrfhBP3M/",
+    img: "",
+    actions: {
+      replies: 23,
+      retweets: 40,
+      retweeted: false,
+      likes: 45,
+      liked: true
+    }
+  }
+];
 
 function Profile(props) {
   return (
@@ -250,8 +285,7 @@ function Profile(props) {
               <TweetsNavLink to="media">Media</TweetsNavLink>
             </TweetsNav>
             <TweetsSection>
-              <Tweet tweet={tweet1} />
-              <Tweet tweet={tweet2} />
+              <TweetsFeed tweets={tweets} />
             </TweetsSection>
           </div>
         </div>
