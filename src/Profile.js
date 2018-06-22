@@ -1,10 +1,13 @@
 import React from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled, { extend } from "styled-components";
+import { Link, NavLink } from "react-router-dom";
 
 import Stats from "./Stats.js";
 import LeftSection from "./Leftsection";
 import TweetsFeed from "./Tweets";
+import RightSection from "./RightSection";
+
+import { ActionButton } from "./App";
 
 // Header images
 
@@ -122,6 +125,9 @@ function Profile(props) {
             </TweetsNav>
 
             <TweetsFeed tweets={tweets} />
+          </div>
+          <div className="col-lg-3">
+            <RightSection />
           </div>
         </div>
       </div>

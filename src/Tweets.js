@@ -145,19 +145,9 @@ function Tweet(props) {
   );
 }
 
-// function TweetsFeed(props) {
-//   const tweetsfeed = [];
-//   props.tweets.forEach(function(tweet, index) {
-//     tweetsfeed.push(<Tweet tweet={tweet} key={index} />);
-//     console.log({ tweetsfeed });
-//   });
-//   return tweetsfeed;
-// }
-
 export default function TweetsFeed(props) {
   const tweetsfeed = props.tweets.map((tweet, index) => (
     <Tweet key={index} tweet={tweet} />
   ));
-  console.log(tweetsfeed);
-  return tweetsfeed;
+    return tweetsfeed;
 }

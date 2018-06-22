@@ -12,6 +12,7 @@ import iconlocation from "./icons/icon-location.svg";
 
 const LeftSectionWrapper = styled.div`
   margin-top: 40px;
+  padding-right: 6px;
 `;
 
 const FullName = styled.h1`
