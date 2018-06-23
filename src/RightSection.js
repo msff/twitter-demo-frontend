@@ -3,6 +3,8 @@ import styled, { extend } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
 import iconDelete from "./icons/icon-delete.svg";
+import verified from "./icons/verified.png";
+import morePeople from "./icons/icon-people.svg";
 
 // Right Section
 
@@ -72,6 +74,12 @@ const WhoToFollowItemUser = styled.span`
   display: block;
 `;
 
+const IsVerified = styled.img`
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+`;
+
 const WhoToFollowItemUsername = styled.span`
   font-size: 13px;
   font-weight: 400;
@@ -109,20 +117,41 @@ const DeleteIcon = styled.img`
   height: 8px;
 `;
 
+const MorePeopleLink = styled(Link)`
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #1da1f2;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
+`;
+
+const MorePeopleIcon = styled.img`
+  width: 16px;
+  height: 12px;
+  display: inline;
+  vertical-align: middle;
+  margin-right: 6px;
+`;
+
 const whotofollow1 = {
   avatar: "/img/whotofollow/appleinsider.png",
   user: "Apple Insider",
-  username: "appleinsider"
+  username: "appleinsider",
+  verified: false
 };
 const whotofollow2 = {
   avatar: "/img/whotofollow/creode.png",
   user: "Creode",
-  username: "Creode"
+  username: "Creode",
+  verified: true
 };
 const whotofollow3 = {
   avatar: "/img/whotofollow/epiphany.png",
   user: "Epiphany Search",
-  username: "epiphanysearch"
+  username: "epiphanysearch",
+  verified: false
 };
 
 function WTFItem(props) {
@@ -131,9 +160,16 @@ function WTFItem(props) {
     <WhoToFollowItemBlock>
       <WhoToFollowItemAvatar src={avatarurl} alt="avatar" />
       <WhoToFollowItemContent>
-        <WhoToFollowProfileLink to={props.profile.username}>
+        <WhoToFollowProfileLink to={"/" + props.profile.username}>
           <WhoToFollowItemUser>{props.profile.user}</WhoToFollowItemUser>
           <small>&nbsp;</small>
+          {props.profile.verified && (
+            <span>
+              <IsVerified src={verified} />
+              <small>&nbsp;</small>
+            </span>
+          )}
+
           <WhoToFollowItemUsername>
             @{props.profile.username}
           </WhoToFollowItemUsername>
@@ -159,6 +195,10 @@ export default function RightSection(props) {
         <WTFItem profile={whotofollow1} />
         <WTFItem profile={whotofollow2} />
         <WTFItem profile={whotofollow3} />
+        <MorePeopleLink to="more">
+          <MorePeopleIcon src={morePeople} />
+          Find people you know
+        </MorePeopleLink>
       </ColumnWrapper>
       <ColumnWrapper>
         <ColumnSectionTopWrapper>
