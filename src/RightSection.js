@@ -14,14 +14,16 @@ const ColumnWrapper = styled.div`
 `;
 
 const ColumnSectionTopWrapper = styled.div`
-  margin-bottom: 4px;
+  margin-bottom: 15px;
   font-size: 12px;
   font-weight: 400;
+  box-sizing: border-box;
 
   color: #979797;
 `;
 
 const ColumnSectionHeader = styled.h3`
+  margin: 0;
   color: #14171a;
   font-size: 17px;
   font-weight: 500;
@@ -43,7 +45,6 @@ const WhoToFollowItemBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  text-overflow: ellipsis;
   border-bottom: 1px solid #e6ecf0;
   margin-top: 11px;
 `;
@@ -53,15 +54,22 @@ const WhoToFollowItemContent = styled.div`
   padding-bottom: 16px;
   line-height: 1;
   max-width: 170px;
-  box-sizing: border-box;
+  flex-grow: 1;
+`;
+
+const WhoToFollowProfileLink = styled(Link)`
+  text-decoration: none;
+  white-space: nowrap;
+  color: #000;
+  display: flex;
+  flex-direction: row;
 `;
 
 const WhoToFollowItemUser = styled.span`
   font-size: 13px;
   font-weight: 500;
   margin-top: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: block;
 `;
 
 const WhoToFollowItemUsername = styled.span`
@@ -70,6 +78,8 @@ const WhoToFollowItemUsername = styled.span`
   color: #657786;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
+  display: block;
 `;
 
 const WhoToFollowItemAvatar = styled.img`
@@ -102,17 +112,17 @@ const DeleteIcon = styled.img`
 const whotofollow1 = {
   avatar: "/img/whotofollow/appleinsider.png",
   user: "Apple Insider",
-  username: "@appleinsider"
+  username: "appleinsider"
 };
 const whotofollow2 = {
   avatar: "/img/whotofollow/creode.png",
   user: "Creode",
-  username: "@Creode"
+  username: "Creode"
 };
 const whotofollow3 = {
   avatar: "/img/whotofollow/epiphany.png",
   user: "Epiphany Search",
-  username: "@epiphanysearch"
+  username: "epiphanysearch"
 };
 
 function WTFItem(props) {
@@ -121,11 +131,13 @@ function WTFItem(props) {
     <WhoToFollowItemBlock>
       <WhoToFollowItemAvatar src={avatarurl} alt="avatar" />
       <WhoToFollowItemContent>
-        <WhoToFollowItemUser>{props.profile.user}</WhoToFollowItemUser>
-        <small>&nbsp;</small>
-        <WhoToFollowItemUsername>
-          {props.profile.username}
-        </WhoToFollowItemUsername>
+        <WhoToFollowProfileLink to={props.profile.username}>
+          <WhoToFollowItemUser>{props.profile.user}</WhoToFollowItemUser>
+          <small>&nbsp;</small>
+          <WhoToFollowItemUsername>
+            @{props.profile.username}
+          </WhoToFollowItemUsername>
+        </WhoToFollowProfileLink>
         <WhoToFollowButton>Follow</WhoToFollowButton>
       </WhoToFollowItemContent>
       <DeleteIcon src={iconDelete} />
