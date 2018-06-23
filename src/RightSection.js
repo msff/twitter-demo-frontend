@@ -8,6 +8,8 @@ import morePeople from "./icons/icon-people.svg";
 
 // Right Section
 
+//Column wrappers and header
+
 const ColumnWrapper = styled.div`
   margin-top: 8px;
   margin-bottom: 2px;
@@ -42,6 +44,8 @@ const ColumnSectionLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+
+// Who To Follow specefic components
 
 const WhoToFollowItemBlock = styled.div`
   display: flex;
@@ -135,6 +139,32 @@ const MorePeopleIcon = styled.img`
   margin-right: 6px;
 `;
 
+// Trends specific components
+
+const TrendBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+const TrendBlockHeader = styled(Link)`
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 15px;
+  color: #1da1f2;
+  text-decoration: none;
+`;
+
+const TrendBlockCaption = styled.div`
+  font-weight: 300;
+  line-height: 20px;
+  font-size: 12px;
+  color: #657786;
+`;
+
+// Who To Follow data objects
+
 const whotofollow1 = {
   avatar: "/img/whotofollow/appleinsider.png",
   user: "Apple Insider",
@@ -154,6 +184,24 @@ const whotofollow3 = {
   verified: false
 };
 
+// Trends data objects
+
+const trend1 = {
+  header: "#BringYourDogToWorkDay",
+  tweets: "",
+  caption: ""
+};
+const trend2 = {
+  header: "#FridayFeeling",
+  tweets: "12.1K",
+  caption: ""
+};
+const trend3 = {
+  header: "#BrexitAnniversary",
+  tweets: "",
+  caption: "It’s one year since the UK voted to leave the European Union"
+};
+
 function WTFItem(props) {
   const avatarurl = `${process.env.PUBLIC_URL}${props.profile.avatar}`;
   return (
@@ -169,7 +217,6 @@ function WTFItem(props) {
               <small>&nbsp;</small>
             </span>
           )}
-
           <WhoToFollowItemUsername>
             @{props.profile.username}
           </WhoToFollowItemUsername>
@@ -181,15 +228,31 @@ function WTFItem(props) {
   );
 }
 
+function TrendItem(props) {
+  return (
+    <TrendBlock>
+      <TrendBlockHeader to={"/" + props.trend.header}>
+        {props.trend.header}
+      </TrendBlockHeader>
+      {props.trend.tweets && (
+        <TrendBlockCaption>{props.trend.tweets + " Tweets"}</TrendBlockCaption>
+      )}
+      {props.trend.caption && (
+        <TrendBlockCaption>{props.trend.caption}</TrendBlockCaption>
+      )}
+    </TrendBlock>
+  );
+}
+
 export default function RightSection(props) {
   return (
     <div>
       <ColumnWrapper>
         <ColumnSectionTopWrapper>
           <ColumnSectionHeader>Who to follow</ColumnSectionHeader>
-          <small> · </small>
+          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
           <ColumnSectionLink to="refresh">Refresh</ColumnSectionLink>
-          <small> · </small>
+          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
           <ColumnSectionLink to="viewall">View all</ColumnSectionLink>
         </ColumnSectionTopWrapper>
         <WTFItem profile={whotofollow1} />
@@ -203,7 +266,12 @@ export default function RightSection(props) {
       <ColumnWrapper>
         <ColumnSectionTopWrapper>
           <ColumnSectionHeader>United Kingdom Trends</ColumnSectionHeader>
+          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
+          <ColumnSectionLink to="trendschange">Change</ColumnSectionLink>
         </ColumnSectionTopWrapper>
+        <TrendItem trend={trend1} />
+        <TrendItem trend={trend2} />
+        <TrendItem trend={trend3} />
       </ColumnWrapper>
     </div>
   );
