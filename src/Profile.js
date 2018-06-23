@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 // Owned components import
 import Stats from "./Stats.js";
-import LeftSection from "./Leftsection";
+import LeftSection from "./LeftSection";
 import TweetsFeed from "./Tweets";
 import RightSection from "./RightSection";
 //import { ActionButton } from "./App";
