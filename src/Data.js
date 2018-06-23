@@ -12,7 +12,14 @@ export const tweets = [
     caption:
       "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI",
     img: "/img/tweet-image.jpg",
-    actions: {}
+    actions: {
+      replies: "",
+      retweets: 40,
+      retweeted: false,
+      likes: 45,
+      liked: true
+    },
+    link: ""
   },
 
   {
@@ -31,7 +38,34 @@ export const tweets = [
       retweets: 40,
       retweeted: false,
       likes: 45,
-      liked: true
+      liked: false
+    },
+    link: ""
+  },
+  {
+    id: 3,
+    pinned: false,
+    profile: {
+      avatar: "/img/ei-avatar-medium.jpg",
+      fullname: "Every Interaction",
+      username: "@EveryInteract"
+    },
+    caption:
+      "Variable web fonts are coming, and will open a world of opportunities for weight use online",
+    img: "",
+    actions: {
+      replies: 23,
+      retweets: 40,
+      retweeted: false,
+      likes: 45,
+      liked: false
+    },
+    link: {
+      url: "vilijamis.com",
+      title: "The Future of Web Fonts",
+      description:
+        "We love typefaces. They give our sites and applications personalized feel. They convey the information and tell a story. They establish information hierarchy. But they’re…",
+      image: "/img/future.png"
     }
   }
 ];

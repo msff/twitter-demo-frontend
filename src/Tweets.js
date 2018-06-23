@@ -1,9 +1,10 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 import pinned from "./icons/icon-pinned.svg";
 import likes from "./icons/icon-hearts.svg";
+import likesFilled from "./icons/icon-hearts-filled.svg";
 import replies from "./icons/icon-replies.svg";
 import retweets from "./icons/icon-retweets.svg";
 import direct from "./icons/icon-direct.svg";
@@ -61,6 +62,13 @@ const Caption = styled.p`
   margin-bottom: 4px;
   font-size: 24px;
   font-weight: 300;
+  ${props =>
+    props.small &&
+    css`
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 400;
+    `};
 `;
 
 const Image = styled.img`
@@ -68,6 +76,51 @@ const Image = styled.img`
   margin-bottom: 3px;
   max-width: 100%;
   max-height: 250px;
+`;
+
+// Link preview components
+
+const OGLinkPreview = styled.a`
+  margin-top: 13px;
+  margin-bottom: 3px;
+  display: flex;
+
+  flex-direction: row;
+  border: 1px solid #e1e8ed;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000000;
+`;
+
+const OGLinkImage = styled.img`
+  margin-right: 9px;
+  border-right: 1px solid #e1e8ed;
+  height: 126px;
+`;
+
+const OGLinkTitle = styled.p`
+  margin: 11px 0 0 0;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+`;
+
+const OGLinkDescription = styled.p`
+  margin: 0;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 63px;
+`;
+
+const OGLinkURL = styled.p`
+  margin: 0;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  color: #8899a6;
 `;
 
 const ActionWrapper = styled.div`
@@ -97,7 +150,7 @@ const ActionIcon = styled.img`
 const ActionCount = styled.span`
   font-weight: 500;
   font-size: 13px;
-  color: #667580;
+  color: ${props => (props.liked ? "#E2264D" : "#667580")};
 `;
 
 function Tweet(props) {
@@ -112,7 +165,6 @@ function Tweet(props) {
           <PinnedLabel>Pinned Tweet</PinnedLabel>
         </Pinned>
       )}
-
       <TweetContentWrapper>
         <TweetHeader>
           <TweetAvatar src={avatarurl} />
@@ -120,8 +172,23 @@ function Tweet(props) {
           <span>&nbsp;</span>
           <ProfileUserName>{props.tweet.profile.username}</ProfileUserName>
         </TweetHeader>
-        <Caption>{props.tweet.caption}</Caption>
+        <Caption small={props.tweet.link}>{props.tweet.caption}</Caption>
         {props.tweet.img && <Image src={imageurl} />}
+        {props.tweet.link && (
+          <OGLinkPreview href={props.tweet.link.url}>
+            <OGLinkImage
+              src={props.tweet.link.image}
+              alt={props.tweet.link.title}
+            />
+            <div>
+              <OGLinkTitle>{props.tweet.link.title}</OGLinkTitle>
+              <OGLinkDescription>
+                {props.tweet.link.description}
+              </OGLinkDescription>
+              <OGLinkURL>{props.tweet.link.url}</OGLinkURL>
+            </div>
+          </OGLinkPreview>
+        )}
 
         <ActionWrapper>
           <ActionBlock to={props.tweet + "/reply"}>
@@ -133,8 +200,14 @@ function Tweet(props) {
             <ActionCount>{props.tweet.actions.retweets}</ActionCount>
           </ActionBlock>
           <ActionBlock to={props.tweet + "/like"}>
-            <ActionIcon src={likes} />
-            <ActionCount>{props.tweet.actions.likes}</ActionCount>
+            {props.tweet.actions.liked ? (
+              <ActionIcon src={likesFilled} />
+            ) : (
+              <ActionIcon src={likes} />
+            )}
+            <ActionCount liked={props.tweet.actions.liked}>
+              {props.tweet.actions.likes}
+            </ActionCount>
           </ActionBlock>
           <ActionBlock to={props.tweet + "/send"}>
             <ActionIcon src={direct} />
@@ -149,5 +222,5 @@ export default function TweetsFeed(props) {
   const tweetsfeed = props.tweets.map((tweet, index) => (
     <Tweet key={index} tweet={tweet} />
   ));
-    return tweetsfeed;
+  return tweetsfeed;
 }
