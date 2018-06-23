@@ -93,3 +93,65 @@ export const trends = [
     caption: ""
   }
 ];
+
+// Followers you know
+
+export const followersyouknow = [
+  {
+    avatar: "/img/followers/1.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  },
+  {
+    avatar: "/img/followers/2.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  },
+  {
+    avatar: "/img/followers/3.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  },
+  {
+    avatar: "/img/followers/4.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  },
+  {
+    avatar: "/img/followers/5.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  },
+  {
+    avatar: "/img/followers/6.png",
+    user: "Apple Insider",
+    username: "appleinsider"
+  }
+];
+
+export const userphotos = [
+  {
+    src: "/img/photos/1.png",
+    caption: "StPaul"
+  },
+  {
+    src: "/img/photos/2.png",
+    caption: "TheShard"
+  },
+  {
+    src: "/img/photos/3.png",
+    caption: "Office"
+  },
+  {
+    src: "/img/photos/4.png",
+    caption: "Coffee"
+  },
+  {
+    src: "/img/photos/5.png",
+    caption: "Magazine"
+  },
+  {
+    src: "/img/photos/6.png",
+    caption: "TheP"
+  }
+];

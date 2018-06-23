@@ -1,13 +1,23 @@
+// Shared components import
 import React from "react";
 import styled, { extend } from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
+// Owned components import
 import Stats from "./Stats.js";
 import LeftSection from "./Leftsection";
 import TweetsFeed from "./Tweets";
 import RightSection from "./RightSection";
+//import { ActionButton } from "./App";
 
-import { ActionButton } from "./App";
+// Data import
+import {
+  tweets,
+  whotofollow,
+  trends,
+  followersyouknow,
+  userphotos
+} from "./Data";
 
 // Header images
 
@@ -58,42 +68,6 @@ const TweetsNav = styled.div`
 
 // Tweets Array
 
-const tweets = [
-  {
-    id: 1,
-    pinned: true,
-    profile: {
-      avatar: "/img/ei-avatar-medium.jpg",
-      fullname: "Every Interaction",
-      username: "@EveryInteract"
-    },
-    caption:
-      "We've made some more resources for all you wonderful #design folk everyinteraction.com/resources/ #webdesign #UI",
-    img: "/img/tweet-image.jpg",
-    actions: {}
-  },
-
-  {
-    id: 2,
-    pinned: false,
-    profile: {
-      avatar: "/img/ei-avatar-medium.jpg",
-      fullname: "Every Interaction",
-      username: "@EveryInteract"
-    },
-    caption:
-      "Our new website concept; Taking you from… @ Every Interaction instagram.com/p/BNFGrfhBP3M/",
-    img: "",
-    actions: {
-      replies: 23,
-      retweets: 40,
-      retweeted: false,
-      likes: 45,
-      liked: true
-    }
-  }
-];
-
 function Profile(props) {
   return (
     <div>
@@ -115,7 +89,7 @@ function Profile(props) {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 start-lg">
-            <LeftSection />
+            <LeftSection followers={followersyouknow} userphotos={userphotos} />
           </div>
           <div className="col-lg-6 start-lg">
             <TweetsNav>
@@ -127,7 +101,7 @@ function Profile(props) {
             <TweetsFeed tweets={tweets} />
           </div>
           <div className="col-lg-3">
-            <RightSection />
+            <RightSection whotofollow={whotofollow} trends={trends} />
           </div>
         </div>
       </div>

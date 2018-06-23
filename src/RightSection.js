@@ -163,45 +163,6 @@ const TrendBlockCaption = styled.div`
   color: #657786;
 `;
 
-// Who To Follow data objects
-
-const whotofollow1 = {
-  avatar: "/img/whotofollow/appleinsider.png",
-  user: "Apple Insider",
-  username: "appleinsider",
-  verified: false
-};
-const whotofollow2 = {
-  avatar: "/img/whotofollow/creode.png",
-  user: "Creode",
-  username: "Creode",
-  verified: true
-};
-const whotofollow3 = {
-  avatar: "/img/whotofollow/epiphany.png",
-  user: "Epiphany Search",
-  username: "epiphanysearch",
-  verified: false
-};
-
-// Trends data objects
-
-const trend1 = {
-  header: "#BringYourDogToWorkDay",
-  tweets: "",
-  caption: ""
-};
-const trend2 = {
-  header: "#FridayFeeling",
-  tweets: "12.1K",
-  caption: ""
-};
-const trend3 = {
-  header: "#BrexitAnniversary",
-  tweets: "",
-  caption: "It’s one year since the UK voted to leave the European Union"
-};
-
 function WTFItem(props) {
   const avatarurl = `${process.env.PUBLIC_URL}${props.profile.avatar}`;
   return (
@@ -228,6 +189,13 @@ function WTFItem(props) {
   );
 }
 
+export function WTFItems(props) {
+  const wtfitems = props.whotofollowitems.map((profile, index) => (
+    <WTFItem key={index} profile={profile} />
+  ));
+  return wtfitems;
+}
+
 function TrendItem(props) {
   return (
     <TrendBlock>
@@ -244,6 +212,13 @@ function TrendItem(props) {
   );
 }
 
+export function Trends(props) {
+  const trenditems = props.trends.map((trend, index) => (
+    <TrendItem key={index} trend={trend} />
+  ));
+  return trenditems;
+}
+
 export default function RightSection(props) {
   return (
     <div>
@@ -255,9 +230,7 @@ export default function RightSection(props) {
           <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
           <ColumnSectionLink to="viewall">View all</ColumnSectionLink>
         </ColumnSectionTopWrapper>
-        <WTFItem profile={whotofollow1} />
-        <WTFItem profile={whotofollow2} />
-        <WTFItem profile={whotofollow3} />
+        <WTFItems whotofollowitems={props.whotofollow} />
         <MorePeopleLink to="more">
           <MorePeopleIcon src={morePeople} />
           Find people you know
@@ -269,9 +242,7 @@ export default function RightSection(props) {
           <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
           <ColumnSectionLink to="trendschange">Change</ColumnSectionLink>
         </ColumnSectionTopWrapper>
-        <TrendItem trend={trend1} />
-        <TrendItem trend={trend2} />
-        <TrendItem trend={trend3} />
+        <Trends trends={props.trends} />
       </ColumnWrapper>
     </div>
   );

@@ -91,19 +91,19 @@ const UserInfoSmall = styled.p`
 const ButtonWrapper = styled.div`
   margin-top: 10px;
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
 
 const ProfileButton = styled.button`
-  width: 49%;
+  width: 128px;
   background-color: #1da1f2;
   border-style: none;
   border-radius: 100px;
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
-  margin-top: 12px;
+  margin: 12px 2.5px 0 2.5px;
   height: 40px;
 `;
 
@@ -123,9 +123,7 @@ const SectionSubheader = styled(Link)`
   display: block;
 `;
 
-// Followers you know section
-
-const FollowersSection = styled.div`
+const LeftSectionFlexWrapper = styled.div`
   width: 100%;
   margin-left: -2.5px;
   margin-right: -2.5px;
@@ -135,13 +133,54 @@ const FollowersSection = styled.div`
   margin-bottom: 13px;
 `;
 
+// Followers you know section
+
 const FollowerAvatar = styled.img`
   margin: 2.5px 2.5px 2.5px 2.5px;
   width: 48px;
   height: 48px;
 `;
 
+function FollowerYouKnowSingle(props) {
+  const avatarurl = `${process.env.PUBLIC_URL}${props.follower.avatar}`;
+  return (
+    <Link to={props.follower.username}>
+      <FollowerAvatar src={avatarurl} alt={props.follower.user} />
+    </Link>
+  );
+}
+
+function FollowersYouKnow(props) {
+  const followers = props.followers.map((follower, index) => (
+    <FollowerYouKnowSingle key={index} follower={follower} />
+  ));
+  return followers;
+}
+
 // Photos section
+
+const PhotoPreview = styled.img`
+  margin: 2.5px 2.5px 2.5px 2.5px;
+  width: 83px;
+  height: 83px;
+`;
+
+function PhotoSingle(props) {
+  const url = `${process.env.PUBLIC_URL}${props.photo.src}`;
+  return (
+    <Link to={url}>
+      <PhotoPreview src={url} alt={props.photo.caption} />
+    </Link>
+  );
+}
+
+function Photos(props) {
+  console.log(props.userphotos);
+  const photos = props.userphotos.map((photo, index) => (
+    <PhotoSingle key={index} photo={photo} />
+  ));
+  return photos;
+}
 
 export default function LeftSection(props) {
   return (
@@ -178,32 +217,15 @@ export default function LeftSection(props) {
       <SectionSubheader to="">
         <UserInfoIcon src={iconFollowers} />6 Followers you know
       </SectionSubheader>
-      <FollowersSection>
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/1.png"}
-          alt="avatar"
-        />
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/2.png"}
-          alt="avatar"
-        />
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/3.png"}
-          alt="avatar"
-        />
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/4.png"}
-          alt="avatar"
-        />
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/5.png"}
-          alt="avatar"
-        />
-        <FollowerAvatar
-          src={process.env.PUBLIC_URL + "/img/followers/6.png"}
-          alt="avatar"
-        />
-      </FollowersSection>
+      <LeftSectionFlexWrapper>
+        <FollowersYouKnow followers={props.followers} />
+      </LeftSectionFlexWrapper>
+      <SectionSubheader to="">
+        <UserInfoIcon src={iconPhotos} />522 Photos and videos
+      </SectionSubheader>
+      <LeftSectionFlexWrapper>
+        <Photos userphotos={props.userphotos} />
+      </LeftSectionFlexWrapper>
     </div>
   );
 }
