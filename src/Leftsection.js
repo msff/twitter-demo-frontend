@@ -1,17 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import "normalize.css";
 import "flexboxgrid2";
 
 import verified from "./icons/verified.png";
-import iconjoined from "./icons/icon-joined.svg";
-import iconlink from "./icons/icon-link.svg";
-import iconlocation from "./icons/icon-location.svg";
+import iconJoined from "./icons/icon-joined.svg";
+import iconLink from "./icons/icon-link.svg";
+import iconLocation from "./icons/icon-location.svg";
+import iconFollowers from "./icons/icon-followers.svg";
+import iconPhotos from "./icons/icon-photos.svg";
 
 const LeftSectionWrapper = styled.div`
   margin-top: 40px;
-  padding-right: 6px;
+  padding-right: 12px;
 `;
 
 const FullName = styled.h1`
@@ -104,7 +107,43 @@ const ProfileButton = styled.button`
   height: 40px;
 `;
 
-function LeftSection(props) {
+// Followers and Photos shared components
+
+const SectionSubheader = styled(Link)`
+  margin-top: 18px;
+  margin-bottom: 5.5px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #1da1f2;
+
+  text-decoration: none;
+
+  display: block;
+`;
+
+// Followers you know section
+
+const FollowersSection = styled.div`
+  width: 100%;
+  margin-left: -2.5px;
+  margin-right: -2.5px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin-bottom: 13px;
+`;
+
+const FollowerAvatar = styled.img`
+  margin: 2.5px 2.5px 2.5px 2.5px;
+  width: 48px;
+  height: 48px;
+`;
+
+// Photos section
+
+export default function LeftSection(props) {
   return (
     <div>
       <LeftSectionWrapper>
@@ -121,13 +160,13 @@ function LeftSection(props) {
           how can we make things *work* amazing.
         </Bio>
         <div>
-          <UserInfoIcon src={iconlocation} />
+          <UserInfoIcon src={iconLocation} />
           <UserInfoSmall>London, UK</UserInfoSmall>
           <br />
-          <UserInfoIcon src={iconlink} />
+          <UserInfoIcon src={iconLink} />
           <UserInfoLink>everyinteraction.com</UserInfoLink>
           <br />
-          <UserInfoIcon src={iconjoined} />
+          <UserInfoIcon src={iconJoined} />
           <UserInfoSmall>Joined May 2008</UserInfoSmall>
         </div>
         <ButtonWrapper>
@@ -135,8 +174,36 @@ function LeftSection(props) {
           <ProfileButton>Message</ProfileButton>
         </ButtonWrapper>
       </LeftSectionWrapper>
+
+      <SectionSubheader to="">
+        <UserInfoIcon src={iconFollowers} />6 Followers you know
+      </SectionSubheader>
+      <FollowersSection>
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/1.png"}
+          alt="avatar"
+        />
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/2.png"}
+          alt="avatar"
+        />
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/3.png"}
+          alt="avatar"
+        />
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/4.png"}
+          alt="avatar"
+        />
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/5.png"}
+          alt="avatar"
+        />
+        <FollowerAvatar
+          src={process.env.PUBLIC_URL + "/img/followers/6.png"}
+          alt="avatar"
+        />
+      </FollowersSection>
     </div>
   );
 }
-
-export default LeftSection;
