@@ -175,7 +175,6 @@ function PhotoSingle(props) {
 }
 
 function Photos(props) {
-  console.log(props.userphotos);
   const photos = props.userphotos.map((photo, index) => (
     <PhotoSingle key={index} photo={photo} />
   ));

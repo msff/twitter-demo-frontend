@@ -1,6 +1,6 @@
 import React from "react";
-import styled, { extend } from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import iconDelete from "./icons/icon-delete.svg";
 import verified from "./icons/verified.png";

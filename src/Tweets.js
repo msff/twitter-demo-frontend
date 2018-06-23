@@ -9,6 +9,8 @@ import replies from "./icons/icon-replies.svg";
 import retweets from "./icons/icon-retweets.svg";
 import direct from "./icons/icon-direct.svg";
 
+// Wrappers
+
 const TweetWrapper = styled.section`
   padding: 8px 10px 8px 10px;
   border-bottom: 1px solid #d8d8d8;
@@ -19,6 +21,8 @@ const TweetWrapper = styled.section`
 const TweetContentWrapper = styled.div`
   margin-left: 60px;
 `;
+
+// Pinned
 
 const Pinned = styled.div`
   margin-left: 37px;
@@ -36,6 +40,8 @@ const PinnedLabel = styled.span`
   font-size: 12px;
   color: #707e88;
 `;
+
+// Main content
 
 const TweetHeader = styled.div``;
 
@@ -78,7 +84,7 @@ const Image = styled.img`
   max-height: 250px;
 `;
 
-// Link preview components
+// Link preview
 
 const OGLinkPreview = styled.a`
   margin-top: 13px;
@@ -123,6 +129,8 @@ const OGLinkURL = styled.p`
   color: #8899a6;
 `;
 
+// Actions block
+
 const ActionWrapper = styled.div`
   margin-top: 13px;
 
@@ -156,6 +164,9 @@ const ActionCount = styled.span`
 function Tweet(props) {
   const avatarurl = `${process.env.PUBLIC_URL}${props.tweet.profile.avatar}`;
   const imageurl = `${process.env.PUBLIC_URL}${props.tweet.img}`;
+  // const caption = `{
+  //           __html: ${props.tweet.caption}
+  //         }`;
 
   return (
     <TweetWrapper>

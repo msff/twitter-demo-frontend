@@ -1,7 +1,7 @@
 // Shared components import
 import React from "react";
-import styled, { extend } from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 // Owned components import
 import Stats from "./Stats.js";
@@ -65,8 +65,6 @@ const TweetsNav = styled.div`
   align-content: center;
   justify-content: flex-start;
 `;
-
-// Tweets Array
 
 function Profile(props) {
   return (
