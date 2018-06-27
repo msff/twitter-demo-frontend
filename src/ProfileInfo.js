@@ -158,14 +158,15 @@ export default function ProfileInfo(props) {
   return (
     <div>
       <SectionWrapper>
-        <FullName>Every Interact</FullName>
-        <span>&nbsp;</span>
-        <IsVerified src={verified} alt="verified" />
-
-        <br />
-        <Username>@Every Interact</Username>
-        <Follows>Follows you</Follows>
-        <br />
+        <div>
+          <FullName>Every Interact</FullName>
+          <span>&nbsp;</span>
+          <IsVerified src={verified} alt="verified" />
+        </div>
+        <div>
+          <Username>@Every Interact</Username>
+          <Follows>Follows you</Follows>
+        </div>
         <Bio>
           UX Design studio focussed problem solving creativity. Design to us is
           how can we make things *work* amazing.
@@ -173,10 +174,12 @@ export default function ProfileInfo(props) {
         <div>
           <UserInfoIcon src={iconLocation} />
           <UserInfoSmall>London, UK</UserInfoSmall>
-          <br />
+        </div>
+        <div>
           <UserInfoIcon src={iconLink} />
           <UserInfoLink>everyinteraction.com</UserInfoLink>
-          <br />
+        </div>
+        <div>
           <UserInfoIcon src={iconJoined} />
           <UserInfoSmall>Joined May 2008</UserInfoSmall>
         </div>
