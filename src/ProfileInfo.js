@@ -9,7 +9,9 @@ import iconLocation from "./icons/icon-location.svg";
 import iconFollowers from "./icons/icon-followers.svg";
 import iconPhotos from "./icons/icon-photos.svg";
 
-const LeftSectionWrapper = styled.div`
+import { SectionSubheader, SectionFlexWrapper } from "./Shared";
+
+const SectionWrapper = styled.div`
   margin-top: 40px;
   padding-right: 12px;
 `;
@@ -104,32 +106,6 @@ const ProfileButton = styled.button`
   height: 40px;
 `;
 
-// Followers and Photos shared components
-
-const SectionSubheader = styled(Link)`
-  margin-top: 18px;
-  margin-bottom: 5.5px;
-
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #1da1f2;
-
-  text-decoration: none;
-
-  display: block;
-`;
-
-const LeftSectionFlexWrapper = styled.div`
-  width: 100%;
-  margin-left: -2.5px;
-  margin-right: -2.5px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  margin-bottom: 13px;
-`;
-
 // Followers you know section
 
 const FollowerAvatar = styled.img`
@@ -178,10 +154,10 @@ function Photos(props) {
   return photos;
 }
 
-export default function LeftSection(props) {
+export default function ProfileInfo(props) {
   return (
     <div>
-      <LeftSectionWrapper>
+      <SectionWrapper>
         <FullName>Every Interact</FullName>
         <span>&nbsp;</span>
         <IsVerified src={verified} alt="verified" />
@@ -208,20 +184,20 @@ export default function LeftSection(props) {
           <ProfileButton>Tweet to</ProfileButton>
           <ProfileButton>Message</ProfileButton>
         </ButtonWrapper>
-      </LeftSectionWrapper>
+      </SectionWrapper>
 
       <SectionSubheader to="">
         <UserInfoIcon src={iconFollowers} />6 Followers you know
       </SectionSubheader>
-      <LeftSectionFlexWrapper>
+      <SectionFlexWrapper>
         <FollowersYouKnow followers={props.followers} />
-      </LeftSectionFlexWrapper>
+      </SectionFlexWrapper>
       <SectionSubheader to="">
         <UserInfoIcon src={iconPhotos} />522 Photos and videos
       </SectionSubheader>
-      <LeftSectionFlexWrapper>
+      <SectionFlexWrapper>
         <Photos userphotos={props.userphotos} />
-      </LeftSectionFlexWrapper>
+      </SectionFlexWrapper>
     </div>
   );
 }

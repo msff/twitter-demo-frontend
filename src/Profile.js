@@ -5,9 +5,11 @@ import { NavLink } from "react-router-dom";
 
 // Owned components import
 import Stats from "./Stats.js";
-import LeftSection from "./LeftSection";
+import ProfileInfo from "./ProfileInfo";
 import TweetsFeed from "./Tweets";
-import RightSection from "./RightSection";
+import Trends from "./Trends";
+import WhoToFollow from "./WhoToFollow";
+
 //import { ActionButton } from "./App";
 
 // Data import
@@ -87,7 +89,7 @@ function Profile(props) {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 start-lg">
-            <LeftSection followers={followersyouknow} userphotos={userphotos} />
+            <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
           </div>
           <div className="col-lg-6 start-lg">
             <TweetsNav>
@@ -99,7 +101,8 @@ function Profile(props) {
             <TweetsFeed tweets={tweets} />
           </div>
           <div className="col-lg-3">
-            <RightSection whotofollow={whotofollow} trends={trends} />
+            <Trends trends={trends} />
+            <WhoToFollow whotofollow={whotofollow} />
           </div>
         </div>
       </div>
