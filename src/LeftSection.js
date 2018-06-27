@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import "normalize.css";
-import "flexboxgrid2";
-
 import verified from "./icons/verified.png";
 import iconJoined from "./icons/icon-joined.svg";
 import iconLink from "./icons/icon-link.svg";

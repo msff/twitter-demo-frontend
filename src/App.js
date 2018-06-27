@@ -8,10 +8,6 @@ import {
 } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-import "normalize.css";
-import "flexboxgrid2";
-import "./App.css";
-
 import Profile from "./Profile";
 import Header from "./Header";
 
