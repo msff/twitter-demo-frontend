@@ -19,7 +19,7 @@ import {
   trends,
   followersyouknow,
   userphotos
-} from "./Data";
+} from "./data";
 
 // Header images
 
