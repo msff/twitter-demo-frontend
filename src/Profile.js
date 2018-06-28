@@ -1,25 +1,19 @@
 // Shared components import
-import React from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 // Owned components import
-import Stats from "./Stats.js";
-import ProfileInfo from "./ProfileInfo";
-import TweetsFeed from "./Tweets";
-import Trends from "./Trends";
-import WhoToFollow from "./WhoToFollow";
-
-//import { ActionButton } from "./App";
+import Stats from './Stats';
+import ProfileInfo from './ProfileInfo';
+import TweetsFeed from './Tweets';
+import Trends from './Trends';
+import WhoToFollow from './WhoToFollow';
 
 // Data import
 import {
-  tweets,
-  whotofollow,
-  trends,
-  followersyouknow,
-  userphotos
-} from "./data";
+  tweets, whotofollow, trends, followersyouknow, userphotos,
+} from './data';
 
 // Header images
 
@@ -34,11 +28,10 @@ const BigAvatar = styled.div`
   z-index: 3;
   width: 210px;
   height: 210px;
-
   border-radius: 100%;
   border: 1px solid #E7ECF0;
   background-color: #fff;
-  background-image: url('${props => props.src}');
+  background-image: url('${({ src }) => src}');
   background-size: cover;
   background-position: center center;
 `;
@@ -68,22 +61,17 @@ const TweetsNav = styled.div`
   justify-content: flex-start;
 `;
 
-function Profile(props) {
+function Profile() {
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
-            <BigAvatar
-              src={process.env.PUBLIC_URL + "/img/ei-avatar-large.png"}
-            />
+            <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
           </div>
         </div>
       </div>
-      <StHeaderImage
-        src={process.env.PUBLIC_URL + "/img/ei-cover.jpg"}
-        alt="everyinteract"
-      />
+      <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
 
       <Stats />
       <div className="container">
@@ -93,9 +81,15 @@ function Profile(props) {
           </div>
           <div className="col-lg-6 start-lg">
             <TweetsNav>
-              <TweetsNavLink to="tweets">Tweets</TweetsNavLink>
-              <TweetsNavLink to="replies">Tweets & replies</TweetsNavLink>
-              <TweetsNavLink to="media">Media</TweetsNavLink>
+              <TweetsNavLink to="tweets">
+Tweets
+              </TweetsNavLink>
+              <TweetsNavLink to="replies">
+Tweets & replies
+              </TweetsNavLink>
+              <TweetsNavLink to="media">
+Media
+              </TweetsNavLink>
             </TweetsNav>
 
             <TweetsFeed tweets={tweets} />

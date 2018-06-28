@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-import { ActionButton } from "./App";
+import { ActionButton } from './Shared';
 
 // Stats Block Components
 
@@ -46,7 +46,7 @@ const StatsBlock = styled(NavLink)`
   }
 `;
 
-function Stats(props) {
+function Stats() {
   return (
     <div>
       <StatsWrapper>
@@ -54,28 +54,50 @@ function Stats(props) {
           <div className="row middle-lg">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
               <StatsBlock to="/EveryInteract/tweets">
-                <StatsBlockHeader>Tweets</StatsBlockHeader>
-                <StatsBlockValue>8,058</StatsBlockValue>
+                <StatsBlockHeader>
+Tweets
+                </StatsBlockHeader>
+                <StatsBlockValue>
+8,058
+                </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to="/EveryInteract/following">
-                <StatsBlockHeader>Following</StatsBlockHeader>
-                <StatsBlockValue>721</StatsBlockValue>
+                <StatsBlockHeader>
+Following
+                </StatsBlockHeader>
+                <StatsBlockValue>
+721
+                </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to="/EveryInteract/followers">
-                <StatsBlockHeader>Followers</StatsBlockHeader>
-                <StatsBlockValue>1,815</StatsBlockValue>
+                <StatsBlockHeader>
+Followers
+                </StatsBlockHeader>
+                <StatsBlockValue>
+1,815
+                </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to="/EveryInteract/likes">
-                <StatsBlockHeader>Likes</StatsBlockHeader>
-                <StatsBlockValue>460</StatsBlockValue>
+                <StatsBlockHeader>
+Likes
+                </StatsBlockHeader>
+                <StatsBlockValue>
+460
+                </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to="/EveryInteract/lists">
-                <StatsBlockHeader>Lists</StatsBlockHeader>
-                <StatsBlockValue>2</StatsBlockValue>
+                <StatsBlockHeader>
+Lists
+                </StatsBlockHeader>
+                <StatsBlockValue>
+2
+                </StatsBlockValue>
               </StatsBlock>
             </div>
             <div className="c col-lg-3 end-lg">
-              <ActionButton outline>Follow</ActionButton>
+              <ActionButton outline>
+Follow
+              </ActionButton>
             </div>
           </div>
         </div>

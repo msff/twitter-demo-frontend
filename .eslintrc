@@ -1,3 +1,10 @@
 {
-  "extends": "react-app"
+  "parser": "babel-eslint",
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-var": "error",
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": 0
+  }
 }
