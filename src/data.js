@@ -21,7 +21,6 @@ export const tweets = [
     },
     link: ""
   },
-
   {
     id: 2,
     pinned: false,
@@ -69,6 +68,7 @@ export const tweets = [
     }
   }
 ];
+
 
 // Who to follow
 
