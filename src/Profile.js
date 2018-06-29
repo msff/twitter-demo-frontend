@@ -1,6 +1,7 @@
 // Shared components import
 import React from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import {
   NavLink, Route, Switch, withRouter,
 } from 'react-router-dom';
@@ -43,6 +44,13 @@ function Profile({ match }) {
   const username = match.params.username;
   return (
     <div>
+      <Helmet>
+        <title>
+          {match.params.username}
+          {' '}
+— Twitter
+        </title>
+      </Helmet>
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
