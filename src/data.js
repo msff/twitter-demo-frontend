@@ -137,32 +137,32 @@ export const followersyouknow = [
   {
     avatar: '/img/followers/1.png',
     user: 'Apple Insider',
-    username: 'appleinsider',
+    username: 'darkejon',
   },
   {
     avatar: '/img/followers/2.png',
-    user: 'Apple Insider',
-    username: 'appleinsider',
+    user: 'Pinky Bazaz',
+    username: 'PinkyBazaz',
   },
   {
     avatar: '/img/followers/3.png',
-    user: 'Apple Insider',
-    username: 'appleinsider',
+    user: 'CADtechniQ',
+    username: 'CADtechniQ',
   },
   {
     avatar: '/img/followers/4.png',
-    user: 'Apple Insider',
-    username: 'appleinsider',
+    user: 'Michael Filipenko',
+    username: 'lom3at ‏',
   },
   {
     avatar: '/img/followers/5.png',
-    user: 'Apple Insider',
-    username: 'appleinsider',
+    user: 'Oleg',
+    username: 'salahov30 ‏',
   },
   {
     avatar: '/img/followers/6.png',
-    user: 'Apple Insider',
-    username: 'appleinsider',
+    user: 'Caroline Ward',
+    username: 'noveltyshoe ‏',
   },
 ];
 
