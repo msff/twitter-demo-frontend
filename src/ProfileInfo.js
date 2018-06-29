@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import verified from './icons/verified.png';
 import iconJoined from './icons/icon-joined.svg';
@@ -125,7 +125,7 @@ function FollowerYouKnowSingle({ follower }) {
 
 function FollowersYouKnow(props) {
   const followers = props.followers.map(follower => (
-    <FollowerYouKnowSingle key={follower} follower={follower} />
+    <FollowerYouKnowSingle key={follower.username} follower={follower} />
   ));
   return followers;
 }
@@ -147,18 +147,18 @@ function PhotoSingle({ photo }) {
   );
 }
 
-function Photos(props) {
-  const photos = props.userphotos.map(photo => <PhotoSingle key={photo} photo={photo} />);
+function Photos({ userphotos }) {
+  const photos = userphotos.map(photo => <PhotoSingle key={photo.caption} photo={photo} />);
   return photos;
 }
 
-export default function ProfileInfo(props) {
+function ProfileInfo({ match, followers, userphotos }) {
   return (
     <div>
       <SectionWrapper>
         <div>
           <FullName>
-Every Interact
+            {match.params.username}
           </FullName>
           <span>
 &nbsp;
@@ -210,15 +210,17 @@ Message
         6 Followers you know
       </SectionSubheader>
       <SectionFlexWrapper>
-        <FollowersYouKnow followers={props.followers} />
+        <FollowersYouKnow followers={followers} />
       </SectionFlexWrapper>
       <SectionSubheader to="">
         <UserInfoIcon src={iconPhotos} />
         522 Photos and videos
       </SectionSubheader>
       <SectionFlexWrapper>
-        <Photos userphotos={props.userphotos} />
+        <Photos userphotos={userphotos} />
       </SectionFlexWrapper>
     </div>
   );
 }
+
+export default withRouter(ProfileInfo);

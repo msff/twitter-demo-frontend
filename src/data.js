@@ -1,3 +1,7 @@
+// Users
+
+export const users = [{}];
+
 // Tweets
 
 export const tweets = [

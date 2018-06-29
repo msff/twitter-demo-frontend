@@ -1,14 +1,17 @@
 // Shared components import
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import {
+  NavLink, Route, Switch, withRouter,
+} from 'react-router-dom';
 
 // Owned components import
 import Stats from './Stats';
 import ProfileInfo from './ProfileInfo';
-import TweetsFeed from './Tweets';
+import TweetsFeed, { TweetsNavRoute } from './Tweets';
 import Trends from './Trends';
 import WhoToFollow from './WhoToFollow';
+import ShowUrl from './EmptyLink';
 
 // Data import
 import {
@@ -36,32 +39,8 @@ const BigAvatar = styled.div`
   background-position: center center;
 `;
 
-// Navigation bar
-
-const TweetsNavLink = styled(NavLink)`
-  padding: 15px 15px 10px 15px;
-  color: #1da1f2;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  &.active {
-    color: #ecc069;
-  }
-`;
-
-const TweetsNav = styled.div`
-  margin-top: 8px;
-  background-color: #ffffff;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-color: #d8d8d8;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: flex-start;
-`;
-
-function Profile() {
+function Profile({ match }) {
+  const username = match.params.username;
   return (
     <div>
       <div className="container">
@@ -80,19 +59,36 @@ function Profile() {
             <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
           </div>
           <div className="col-lg-6 start-lg">
-            <TweetsNav>
-              <TweetsNavLink to="tweets">
-Tweets
-              </TweetsNavLink>
-              <TweetsNavLink to="replies">
-Tweets & replies
-              </TweetsNavLink>
-              <TweetsNavLink to="media">
-Media
-              </TweetsNavLink>
-            </TweetsNav>
-
-            <TweetsFeed tweets={tweets} />
+            <Switch>
+              <Route
+                path="/:username/tweets"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <TweetsFeed tweets={tweets} />
+                  </React.Fragment>
+                )}
+              />
+              <Route
+                path="/:username/with_replies"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <ShowUrl />
+                  </React.Fragment>
+                )}
+              />
+              <Route
+                path="/:username/media"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <ShowUrl />
+                  </React.Fragment>
+                )}
+              />
+              <Route path="/:username" component={ShowUrl} />
+            </Switch>
           </div>
           <div className="col-lg-3">
             <Trends trends={trends} />
@@ -104,4 +100,4 @@ Media
   );
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -1,13 +1,38 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 
-import pinned from "./icons/icon-pinned.svg";
-import likes from "./icons/icon-hearts.svg";
-import likesFilled from "./icons/icon-hearts-filled.svg";
-import replies from "./icons/icon-replies.svg";
-import retweets from "./icons/icon-retweets.svg";
-import direct from "./icons/icon-direct.svg";
+import pinned from './icons/icon-pinned.svg';
+import likes from './icons/icon-hearts.svg';
+import likesFilled from './icons/icon-hearts-filled.svg';
+import replies from './icons/icon-replies.svg';
+import retweets from './icons/icon-retweets.svg';
+import direct from './icons/icon-direct.svg';
+
+// Navigation bar
+
+const TweetsNavLink = styled(NavLink)`
+  padding: 15px 15px 10px 15px;
+  color: #1da1f2;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  &.active {
+    color: #ecc069;
+  }
+`;
+
+const TweetsNavWrapper = styled.div`
+  margin-top: 8px;
+  background-color: #ffffff;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #d8d8d8;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+`;
 
 // Wrappers
 
@@ -68,9 +93,8 @@ const Caption = styled.p`
   margin-bottom: 4px;
   font-size: 24px;
   font-weight: 300;
-  ${props =>
-    props.small &&
-    css`
+  ${({ small }) => small
+    && css`
       font-size: 16px;
       line-height: 22px;
       font-weight: 400;
@@ -158,69 +182,96 @@ const ActionIcon = styled.img`
 const ActionCount = styled.span`
   font-weight: 500;
   font-size: 13px;
-  color: ${props => (props.liked ? "#E2264D" : "#667580")};
+  color: ${({ liked }) => (liked ? '#E2264D' : '#667580')};
 `;
 
-function Tweet(props) {
-  const avatarurl = `${process.env.PUBLIC_URL}${props.tweet.profile.avatar}`;
-  const imageurl = `${process.env.PUBLIC_URL}${props.tweet.img}`;
+function TweetsNav({ username }) {
+  return (
+    <TweetsNavWrapper>
+      <TweetsNavLink to={`/${username}/tweets`}>
+Tweets
+      </TweetsNavLink>
+      <TweetsNavLink to={`/${username}/with_replies`}>
+Tweets & replies
+      </TweetsNavLink>
+      <TweetsNavLink to={`/${username}/media`}>
+Media
+      </TweetsNavLink>
+    </TweetsNavWrapper>
+  );
+}
+export const TweetsNavRoute = withRouter(TweetsNav);
+
+function Tweet({ tweet }) {
+  const avatarurl = `${process.env.PUBLIC_URL}${tweet.profile.avatar}`;
+  const imageurl = `${process.env.PUBLIC_URL}${tweet.img}`;
   // const caption = `{
   //           __html: ${props.tweet.caption}
   //         }`;
-
   return (
     <TweetWrapper>
-      {props.tweet.pinned && (
+      {tweet.pinned && (
         <Pinned>
           <PinnedIcon src={pinned} alt="pinned" />
-          <PinnedLabel>Pinned Tweet</PinnedLabel>
+          <PinnedLabel>
+Pinned Tweet
+          </PinnedLabel>
         </Pinned>
       )}
       <TweetContentWrapper>
         <TweetHeader>
           <TweetAvatar src={avatarurl} />
-          <ProfileFullName>{props.tweet.profile.fullname}</ProfileFullName>
-          <span>&nbsp;</span>
-          <ProfileUserName>{props.tweet.profile.username}</ProfileUserName>
+          <ProfileFullName>
+            {tweet.profile.fullname}
+          </ProfileFullName>
+          <span>
+&nbsp;
+          </span>
+          <ProfileUserName>
+            {tweet.profile.username}
+          </ProfileUserName>
         </TweetHeader>
-        <Caption small={props.tweet.link}>{props.tweet.caption}</Caption>
-        {props.tweet.img && <Image src={imageurl} />}
-        {props.tweet.link && (
-          <OGLinkPreview href={props.tweet.link.url}>
-            <OGLinkImage
-              src={props.tweet.link.image}
-              alt={props.tweet.link.title}
-            />
+        <Caption small={tweet.link}>
+          {tweet.caption}
+        </Caption>
+        {tweet.img && <Image src={imageurl} />}
+        {tweet.link && (
+          <OGLinkPreview href={tweet.link.url}>
+            <OGLinkImage src={tweet.link.image} alt={tweet.link.title} />
             <div>
-              <OGLinkTitle>{props.tweet.link.title}</OGLinkTitle>
+              <OGLinkTitle>
+                {tweet.link.title}
+              </OGLinkTitle>
               <OGLinkDescription>
-                {props.tweet.link.description}
+                {tweet.link.description}
               </OGLinkDescription>
-              <OGLinkURL>{props.tweet.link.url}</OGLinkURL>
+              <OGLinkURL>
+                {tweet.link.url}
+              </OGLinkURL>
             </div>
           </OGLinkPreview>
         )}
 
         <ActionWrapper>
-          <ActionBlock to={props.tweet + "/reply"}>
+          <ActionBlock to={`${tweet.id}/reply`}>
             <ActionIcon src={replies} />
-            <ActionCount>{props.tweet.actions.replies}</ActionCount>
-          </ActionBlock>
-          <ActionBlock to={props.tweet + "/retweet"}>
-            <ActionIcon src={retweets} />
-            <ActionCount>{props.tweet.actions.retweets}</ActionCount>
-          </ActionBlock>
-          <ActionBlock to={props.tweet + "/like"}>
-            {props.tweet.actions.liked ? (
-              <ActionIcon src={likesFilled} />
-            ) : (
-              <ActionIcon src={likes} />
-            )}
-            <ActionCount liked={props.tweet.actions.liked}>
-              {props.tweet.actions.likes}
+            <ActionCount>
+              {tweet.actions.replies}
             </ActionCount>
           </ActionBlock>
-          <ActionBlock to={props.tweet + "/send"}>
+          <ActionBlock to={`${tweet.id}/retweet`}>
+            <ActionIcon src={retweets} />
+            <ActionCount>
+              {tweet.actions.retweets}
+            </ActionCount>
+          </ActionBlock>
+          <ActionBlock to={`${tweet.id}/like`}>
+            {tweet.actions.liked ? <ActionIcon src={likesFilled} /> : <ActionIcon src={likes} />}
+            <ActionCount liked={tweet.actions.liked}>
+              {tweet.actions.likes}
+            </ActionCount>
+          </ActionBlock>
+          <ActionBlock to={`${tweet.id}/send`}>
             <ActionIcon src={direct} />
           </ActionBlock>
         </ActionWrapper>
@@ -230,8 +281,6 @@ function Tweet(props) {
 }
 
 export default function TweetsFeed(props) {
-  const tweetsfeed = props.tweets.map((tweet, index) => (
-    <Tweet key={index} tweet={tweet} />
-  ));
+  const tweetsfeed = props.tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
   return tweetsfeed;
 }

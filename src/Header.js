@@ -91,7 +91,7 @@ function Header() {
       <div className="container">
         <div className="row between-lg middle-lg">
           <HeaderElement>
-            <StNavLink to="/home">
+            <StNavLink to="/">
               <NavIcon src={iconHome} alt="Home" />
               <NavLabel>
 Home

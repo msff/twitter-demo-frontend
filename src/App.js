@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 
 import Profile from './Profile';
 import Header from './Header';
+import ShowUrl from './EmptyLink';
 
 function App() {
   return (
@@ -23,11 +24,12 @@ Every Interactive — Twitter
           <Header />
         </header>
         <main>
-          <Route path="/EveryInteract" component={Profile} />
-          <Route path="/home" component={Profile} />
-          <Route path="/moments" component={Profile} />
-          <Route path="/notifications" component={Profile} />
-          <Route path="/messages" component={Profile} />
+          <Switch>
+            <Route path="/moments" component={ShowUrl} />
+            <Route path="/notifications" component={ShowUrl} />
+            <Route path="/messages" component={ShowUrl} />
+            <Route path="/:username" component={Profile} />
+          </Switch>
         </main>
       </div>
     </Router>
