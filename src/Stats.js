@@ -53,7 +53,7 @@ function Stats({ location, match }) {
         <div className="container">
           <div className="row middle-lg">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
-              <StatsBlock to={`/${match.params.username}/tweets`}>
+              <StatsBlock exact to={`/${match.params.username}/`}>
                 <StatsBlockHeader>
 Tweets
                 </StatsBlockHeader>

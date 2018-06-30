@@ -11,7 +11,7 @@ import direct from './icons/icon-direct.svg';
 
 // Navigation bar
 
-const TweetsNavLink = styled(NavLink)`
+const StNavLink = styled(NavLink)`
   padding: 15px 15px 10px 15px;
   color: #1da1f2;
   font-weight: bold;
@@ -22,7 +22,7 @@ const TweetsNavLink = styled(NavLink)`
   }
 `;
 
-const TweetsNavWrapper = styled.div`
+const NavWrapper = styled.div`
   margin-top: 8px;
   background-color: #ffffff;
   border-bottom-width: 1px;
@@ -36,14 +36,14 @@ const TweetsNavWrapper = styled.div`
 
 // Wrappers
 
-const TweetWrapper = styled.section`
+const MainWrapper = styled.section`
   padding: 8px 10px 8px 10px;
   border-bottom: 1px solid #d8d8d8;
   //width: 100%;
   background-color: #fff;
 `;
 
-const TweetContentWrapper = styled.div`
+const ContentWrapper = styled.div`
   margin-left: 60px;
 `;
 
@@ -68,7 +68,7 @@ const PinnedLabel = styled.span`
 
 // Main content
 
-const TweetHeader = styled.div``;
+const Header = styled.div``;
 
 const TweetAvatar = styled.img`
   position: absolute;
@@ -187,17 +187,17 @@ const ActionCount = styled.span`
 
 function TweetsNav({ username }) {
   return (
-    <TweetsNavWrapper>
-      <TweetsNavLink to={`/${username}/tweets`}>
+    <NavWrapper>
+      <StNavLink exact to={`/${username}/`}>
 Tweets
-      </TweetsNavLink>
-      <TweetsNavLink to={`/${username}/with_replies`}>
+      </StNavLink>
+      <StNavLink to={`/${username}/with_replies`}>
 Tweets & replies
-      </TweetsNavLink>
-      <TweetsNavLink to={`/${username}/media`}>
+      </StNavLink>
+      <StNavLink to={`/${username}/media`}>
 Media
-      </TweetsNavLink>
-    </TweetsNavWrapper>
+      </StNavLink>
+    </NavWrapper>
   );
 }
 export const TweetsNavRoute = withRouter(TweetsNav);
@@ -209,7 +209,7 @@ function Tweet({ tweet }) {
   //           __html: ${props.tweet.caption}
   //         }`;
   return (
-    <TweetWrapper>
+    <MainWrapper>
       {tweet.pinned && (
         <Pinned>
           <PinnedIcon src={pinned} alt="pinned" />
@@ -218,8 +218,8 @@ Pinned Tweet
           </PinnedLabel>
         </Pinned>
       )}
-      <TweetContentWrapper>
-        <TweetHeader>
+      <ContentWrapper>
+        <Header>
           <TweetAvatar src={avatarurl} />
           <ProfileFullName>
             {tweet.profile.fullname}
@@ -230,7 +230,7 @@ Pinned Tweet
           <ProfileUserName>
             {tweet.profile.username}
           </ProfileUserName>
-        </TweetHeader>
+        </Header>
         <Caption small={tweet.link}>
           {tweet.caption}
         </Caption>
@@ -275,8 +275,8 @@ Pinned Tweet
             <ActionIcon src={direct} />
           </ActionBlock>
         </ActionWrapper>
-      </TweetContentWrapper>
-    </TweetWrapper>
+      </ContentWrapper>
+    </MainWrapper>
   );
 }
 

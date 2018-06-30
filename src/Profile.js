@@ -2,9 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import {
-  Route, Switch, withRouter,
-} from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 // Owned components import
 import Stats from './Stats';
@@ -69,7 +67,8 @@ function Profile({ match }) {
           <div className="col-lg-6 start-lg">
             <Switch>
               <Route
-                path="/:username/tweets"
+                exact
+                path="/:username/"
                 render={() => (
                   <React.Fragment>
                     <TweetsNavRoute username={username} />

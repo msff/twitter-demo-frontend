@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-function ShowUrl({ match }) {
+function ShowUrl({ location }) {
   return (
     <h1>
       This is&nbsp;
-      {match.url}
+      {location.pathname}
     </h1>
   );
 }

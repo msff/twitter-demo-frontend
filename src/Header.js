@@ -11,12 +11,12 @@ import iconMagnifier from './icons/icon-magnifier.svg';
 
 import { ActionButton } from './Shared';
 
-const Wrapper = styled.div`
+const Background = styled.div`
   background-color: #ffffff;
   width: 100%;
 `;
 
-const HeaderElement = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -37,12 +37,12 @@ const StNavLink = styled(NavLink)`
   cursor: pointer;
 `;
 
-const NavIcon = styled.img`
+const Icon = styled.img`
   max-height: 18px;
   max-width: 18px;
   margin-right: 8px;
 `;
-const NavLabel = styled.span`
+const Label = styled.span`
   font-weight: bold;
   font-size: 13px;
   color: #667580;
@@ -85,41 +85,47 @@ const AvatarWrapper = styled(NavLink)`
   align-items: center;
 `;
 
-function Header() {
+function Navigation() {
   return (
     <Wrapper>
+      <StNavLink to="/">
+        <Icon src={iconHome} alt="Home" />
+        <Label>
+Home
+        </Label>
+      </StNavLink>
+      <StNavLink to="/moments">
+        <Icon src={iconMoments} alt="Moments" />
+        <Label>
+Moments
+        </Label>
+      </StNavLink>
+      <StNavLink to="/notifications">
+        <Icon src={iconNotifications} alt="Notifications" />
+        <Label>
+Notifications
+        </Label>
+      </StNavLink>
+      <StNavLink to="/messages">
+        <Icon src={iconMessages} alt="Messages" />
+        <Label>
+Messages
+        </Label>
+      </StNavLink>
+    </Wrapper>
+  );
+}
+
+function Header() {
+  return (
+    <Background>
       <div className="container">
         <div className="row between-lg middle-lg">
-          <HeaderElement>
-            <StNavLink to="/">
-              <NavIcon src={iconHome} alt="Home" />
-              <NavLabel>
-Home
-              </NavLabel>
-            </StNavLink>
-            <StNavLink to="/moments">
-              <NavIcon src={iconMoments} alt="Moments" />
-              <NavLabel>
-Moments
-              </NavLabel>
-            </StNavLink>
-            <StNavLink to="/notifications">
-              <NavIcon src={iconNotifications} alt="Notifications" />
-              <NavLabel>
-Notifications
-              </NavLabel>
-            </StNavLink>
-            <StNavLink to="/messages">
-              <NavIcon src={iconMessages} alt="Messages" />
-              <NavLabel>
-Messages
-              </NavLabel>
-            </StNavLink>
-          </HeaderElement>
-          <HeaderElement>
+          <Navigation />
+          <Wrapper>
             <Logo src={logo} alt="logo" />
-          </HeaderElement>
-          <HeaderElement>
+          </Wrapper>
+          <Wrapper>
             <SearchInput placeholder="Search Twitter" />
             <AvatarWrapper to="/">
               <Avatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-small.jpg`} />
@@ -129,10 +135,10 @@ Messages
 Tweet
               </ActionButton>
             </NavLink>
-          </HeaderElement>
+          </Wrapper>
         </div>
       </div>
-    </Wrapper>
+    </Background>
   );
 }
 
