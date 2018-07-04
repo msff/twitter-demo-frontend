@@ -38,73 +38,79 @@ const BigAvatar = styled.div`
   background-position: center center;
 `;
 
-function Profile({ match }) {
-  const username = match.params.username;
-  return (
-    <div>
-      <Helmet>
-        <title>
-          {match.params.username}
-          {' '}
-— Twitter
-        </title>
-      </Helmet>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3">
-            <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
-          </div>
-        </div>
-      </div>
-      <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.username = props.match.params.username;
+  }
 
-      <Stats />
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3 start-lg">
-            <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
+  render() {
+    return (
+      <div>
+        <Helmet>
+          <title>
+            {this.username}
+            {' '}
+— Twitter
+          </title>
+        </Helmet>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-3">
+              <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
+            </div>
           </div>
-          <div className="col-lg-6 start-lg">
-            <Switch>
-              <Route
-                exact
-                path="/:username/"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <TweetsFeed tweets={tweets} />
-                  </React.Fragment>
-                )}
-              />
-              <Route
-                path="/:username/with_replies"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <ShowUrl />
-                  </React.Fragment>
-                )}
-              />
-              <Route
-                path="/:username/media"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <ShowUrl />
-                  </React.Fragment>
-                )}
-              />
-              <Route path="/:username" component={ShowUrl} />
-            </Switch>
-          </div>
-          <div className="col-lg-3">
-            <Trends trends={trends} />
-            <WhoToFollow whotofollow={whotofollow} />
+        </div>
+        <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
+
+        <Stats />
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-3 start-lg">
+              <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
+            </div>
+            <div className="col-lg-6 start-lg">
+              <Switch>
+                <Route
+                  exact
+                  path="/:username/"
+                  render={() => (
+                    <React.Fragment>
+                      <TweetsNavRoute username={this.username} />
+                      <TweetsFeed tweets={tweets} />
+                    </React.Fragment>
+                  )}
+                />
+                <Route
+                  path="/:username/with_replies"
+                  render={() => (
+                    <React.Fragment>
+                      <TweetsNavRoute username={this.username} />
+                      <ShowUrl />
+                    </React.Fragment>
+                  )}
+                />
+                <Route
+                  path="/:username/media"
+                  render={() => (
+                    <React.Fragment>
+                      <TweetsNavRoute username={this.username} />
+                      <ShowUrl />
+                    </React.Fragment>
+                  )}
+                />
+                <Route path="/:username" component={ShowUrl} />
+              </Switch>
+            </div>
+            <div className="col-lg-3">
+              <Trends trends={trends} />
+              <WhoToFollow whotofollow={whotofollow} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default withRouter(Profile);
