@@ -152,13 +152,15 @@ function Photos({ userphotos }) {
   return photos;
 }
 
-function ProfileInfo({ match, followers, userphotos }) {
+function ProfileInfo({
+  match, profileinfo, followers, userphotos,
+}) {
   return (
     <div>
       <SectionWrapper>
         <div>
           <FullName>
-            {match.params.username}
+            {profileinfo.display_name}
           </FullName>
           <span>
 &nbsp;

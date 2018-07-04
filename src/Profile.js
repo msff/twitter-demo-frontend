@@ -44,7 +44,25 @@ class Profile extends React.Component {
     this.username = props.match.params.username;
   }
 
+  state = {
+    profile: {},
+  };
+
+  componentDidMount() {
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/1?access_token=${
+      process.env.REACT_APP_ACCESS_TOKEN
+    }`;
+    
+    fetch(url)
+      .then(response => response.json())
+      .then(responseAsJson => this.setState({ profile: responseAsJson }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
+    console.log(this.state.profile.display_name);
     return (
       <div>
         <Helmet>
@@ -67,7 +85,11 @@ class Profile extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-3 start-lg">
-              <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
+              <ProfileInfo
+                profileinfo={this.state.profile}
+                followers={followersyouknow}
+                userphotos={userphotos}
+              />
             </div>
             <div className="col-lg-6 start-lg">
               <Switch>
