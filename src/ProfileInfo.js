@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Parser from 'html-react-parser';
 import { Link, withRouter } from 'react-router-dom';
 
 import verified from './icons/verified.png';
@@ -152,15 +153,19 @@ function Photos({ userphotos }) {
   return photos;
 }
 
+const cleanHTML = {
+  replace: ({ children }) => children,
+};
+
 function ProfileInfo({
-  match, profileinfo, followers, userphotos,
+  match, profile, followers, userphotos,
 }) {
   return (
     <div>
       <SectionWrapper>
         <div>
           <FullName>
-            {profileinfo.display_name}
+            {profile.display_name}
           </FullName>
           <span>
 &nbsp;
@@ -169,15 +174,15 @@ function ProfileInfo({
         </div>
         <div>
           <Username>
-@Every Interact
+            @
+            {profile.username}
           </Username>
           <Follows>
 Follows you
           </Follows>
         </div>
         <Bio>
-          UX Design studio focussed problem solving creativity. Design to us is how can we make
-          things *work* amazing.
+          {profile.note && Parser(profile.note)}
         </Bio>
         <div>
           <UserInfoIcon src={iconLocation} />

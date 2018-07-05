@@ -46,7 +46,9 @@ const StatsBlock = styled(NavLink)`
   }
 `;
 
-function Stats({ location, match }) {
+function Stats({ profile, match }) {
+  console.log(profile.note);
+
   return (
     <div>
       <StatsWrapper>
@@ -58,7 +60,7 @@ function Stats({ location, match }) {
 Tweets
                 </StatsBlockHeader>
                 <StatsBlockValue>
-8,058
+                  {profile.statuses_count}
                 </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to={`/${match.params.username}/following`}>
@@ -66,7 +68,7 @@ Tweets
 Following
                 </StatsBlockHeader>
                 <StatsBlockValue>
-721
+                  {profile.following_count}
                 </StatsBlockValue>
               </StatsBlock>
               <StatsBlock to={`/${match.params.username}/followers`}>
@@ -74,10 +76,10 @@ Following
 Followers
                 </StatsBlockHeader>
                 <StatsBlockValue>
-1,815
+                  {profile.followers_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/likes`}>
+              {/* <StatsBlock to={`/${match.params.username}/likes`}>
                 <StatsBlockHeader>
 Likes
                 </StatsBlockHeader>
@@ -92,7 +94,7 @@ Lists
                 <StatsBlockValue>
 2
                 </StatsBlockValue>
-              </StatsBlock>
+              </StatsBlock> */}
             </div>
             <div className="c col-lg-3 end-lg">
               <ActionButton outline>

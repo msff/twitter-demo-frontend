@@ -1,6 +1,7 @@
 // Shared components import
 import React from 'react';
 import styled from 'styled-components';
+import Parser from 'html-react-parser';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
@@ -20,8 +21,9 @@ import {
 // Header images
 
 const StHeaderImage = styled.img`
-  max-width: 100%;
+  width: 100%;
   max-height: 380px;
+  object-fit: cover;
 `;
 
 const BigAvatar = styled.div`
@@ -52,7 +54,7 @@ class Profile extends React.Component {
     const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/1?access_token=${
       process.env.REACT_APP_ACCESS_TOKEN
     }`;
-    
+
     fetch(url)
       .then(response => response.json())
       .then(responseAsJson => this.setState({ profile: responseAsJson }))
@@ -62,34 +64,28 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log(this.state.profile.display_name);
+    const { profile } = this.state;
     return (
       <div>
         <Helmet>
           <title>
-            {this.username}
-            {' '}
-— Twitter
+            {`${profile.display_name} — Twitter`}
           </title>
         </Helmet>
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
-              <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
+              <BigAvatar src={profile.avatar} alt={profile.username} />
             </div>
           </div>
         </div>
-        <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
+        <StHeaderImage src={profile.header} alt={profile.username} />
 
-        <Stats />
+        <Stats profile={profile} />
         <div className="container">
           <div className="row">
             <div className="col-lg-3 start-lg">
-              <ProfileInfo
-                profileinfo={this.state.profile}
-                followers={followersyouknow}
-                userphotos={userphotos}
-              />
+              <ProfileInfo profile={profile} followers={followersyouknow} userphotos={userphotos} />
             </div>
             <div className="col-lg-6 start-lg">
               <Switch>
@@ -99,7 +95,7 @@ class Profile extends React.Component {
                   render={() => (
                     <React.Fragment>
                       <TweetsNavRoute username={this.username} />
-                      <TweetsFeed tweets={tweets} />
+                      <TweetsFeed profile={profile} />
                     </React.Fragment>
                   )}
                 />

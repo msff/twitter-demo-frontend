@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import Parser from 'html-react-parser';
 
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
@@ -189,7 +190,7 @@ function TweetsNav({ username }) {
   return (
     <NavWrapper>
       <StNavLink exact to={`/${username}/`}>
-Tweets
+        Tweets
       </StNavLink>
       <StNavLink to={`/${username}/with_replies`}>
 Tweets & replies
@@ -203,11 +204,6 @@ Media
 export const TweetsNavRoute = withRouter(TweetsNav);
 
 function Tweet({ tweet }) {
-  const avatarurl = `${process.env.PUBLIC_URL}${tweet.profile.avatar}`;
-  const imageurl = `${process.env.PUBLIC_URL}${tweet.img}`;
-  // const caption = `{
-  //           __html: ${props.tweet.caption}
-  //         }`;
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -220,21 +216,21 @@ Pinned Tweet
       )}
       <ContentWrapper>
         <Header>
-          <TweetAvatar src={avatarurl} />
+          <TweetAvatar src={tweet.account.avatar} />
           <ProfileFullName>
-            {tweet.profile.fullname}
+            {tweet.account.display_name}
           </ProfileFullName>
           <span>
 &nbsp;
           </span>
           <ProfileUserName>
-            {tweet.profile.username}
+            {tweet.account.username}
           </ProfileUserName>
         </Header>
-        <Caption small={tweet.link}>
-          {tweet.caption}
+        <Caption small={tweet.media_attachments}>
+          {tweet.content}
         </Caption>
-        {tweet.img && <Image src={imageurl} />}
+        {/* {tweet.img && <Image src={imageurl} />}
         {tweet.link && (
           <OGLinkPreview href={tweet.link.url}>
             <OGLinkImage src={tweet.link.image} alt={tweet.link.title} />
@@ -250,25 +246,22 @@ Pinned Tweet
               </OGLinkURL>
             </div>
           </OGLinkPreview>
-        )}
+        )} */}
 
         <ActionWrapper>
           <ActionBlock to={`${tweet.id}/reply`}>
             <ActionIcon src={replies} />
-            <ActionCount>
-              {tweet.actions.replies}
-            </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/retweet`}>
             <ActionIcon src={retweets} />
             <ActionCount>
-              {tweet.actions.retweets}
+              {tweet.reblogs_count}
             </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/like`}>
-            {tweet.actions.liked ? <ActionIcon src={likesFilled} /> : <ActionIcon src={likes} />}
-            <ActionCount liked={tweet.actions.liked}>
-              {tweet.actions.likes}
+            {tweet.favourited ? <ActionIcon src={likesFilled} /> : <ActionIcon src={likes} />}
+            <ActionCount liked={tweet.favourited}>
+              {tweet.favourites_count}
             </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/send`}>
@@ -280,7 +273,33 @@ Pinned Tweet
   );
 }
 
-export default function TweetsFeed(props) {
-  const tweetsfeed = props.tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
-  return tweetsfeed;
+export default class TweetsFeed extends React.Component {
+  constructor(props) {
+    super(props);
+    this.profile = props.profile;
+  }
+
+  state = {
+    tweets: [],
+  };
+
+  componentDidMount() {
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/1/statuses?access_token=${
+      process.env.REACT_APP_ACCESS_TOKEN
+    }`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(responseAsJson => this.setState({ tweets: responseAsJson }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    const { tweets } = this.state;
+    console.log(tweets);
+    const tweetsfeed = tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
+    return tweetsfeed;
+  }
 }
