@@ -72,10 +72,15 @@ const PinnedLabel = styled.span`
 
 const Header = styled.div``;
 
-const TweetAvatar = styled.img`
+const TweetAvatar = styled.div`
   position: absolute;
   margin-left: -60px;
   width: 50px;
+  height: 50px;
+    border-radius: 100%;
+    background-image: url('${({ src }) => src}');
+  background-size: cover;
+  background-position: center center;
 `;
 
 const Title = styled.span`
