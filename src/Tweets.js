@@ -140,48 +140,48 @@ const ImageWrapper = styled.div`
 
 // Link preview
 
-const OGLinkPreview = styled.a`
-  margin-top: 13px;
-  margin-bottom: 3px;
-  display: flex;
+// const OGLinkPreview = styled.a`
+//   margin-top: 13px;
+//   margin-bottom: 3px;
+//   display: flex;
 
-  flex-direction: row;
-  border: 1px solid #e1e8ed;
-  border-radius: 4px;
-  text-decoration: none;
-  color: #000000;
-`;
+//   flex-direction: row;
+//   border: 1px solid #e1e8ed;
+//   border-radius: 4px;
+//   text-decoration: none;
+//   color: #000000;
+// `;
 
-const OGLinkImage = styled.img`
-  margin-right: 9px;
-  border-right: 1px solid #e1e8ed;
-  height: 126px;
-`;
+// const OGLinkImage = styled.img`
+//   margin-right: 9px;
+//   border-right: 1px solid #e1e8ed;
+//   height: 126px;
+// `;
 
-const OGLinkTitle = styled.p`
-  margin: 11px 0 0 0;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 22px;
-`;
+// const OGLinkTitle = styled.p`
+//   margin: 11px 0 0 0;
+//   font-weight: 600;
+//   font-size: 15px;
+//   line-height: 22px;
+// `;
 
-const OGLinkDescription = styled.p`
-  margin: 0;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-height: 63px;
-`;
+// const OGLinkDescription = styled.p`
+//   margin: 0;
+//   font-weight: 400;
+//   font-size: 15px;
+//   line-height: 21px;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   max-height: 63px;
+// `;
 
-const OGLinkURL = styled.p`
-  margin: 0;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21px;
-  color: #8899a6;
-`;
+// const OGLinkURL = styled.p`
+//   margin: 0;
+//   font-weight: 400;
+//   font-size: 15px;
+//   line-height: 21px;
+//   color: #8899a6;
+// `;
 
 // Actions block
 
@@ -256,8 +256,7 @@ function Images({ images }) {
 
 const captionHtmlRenderer = {
   replace: (domNode) => {
-    console.log(domNode);
-    if (!domNode.attribs) return;
+    if (!domNode.attribs) return domToReact(domNode);
     if (domNode.name === 'p') {
       return (
         <Caption>
@@ -273,7 +272,7 @@ const captionHtmlRenderer = {
       );
     }
     if (domNode.attribs.class === 'invisible') {
-return <span/>;
+      return <span />;
     }
   },
 };
