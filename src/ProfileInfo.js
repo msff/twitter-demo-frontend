@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Parser from 'html-react-parser';
 import { Link, withRouter } from 'react-router-dom';
+import { format } from 'date-fns';
 
 import verified from './icons/verified.png';
 import iconJoined from './icons/icon-joined.svg';
@@ -199,7 +200,8 @@ everyinteraction.com
         <div>
           <UserInfoIcon src={iconJoined} />
           <UserInfoSmall>
-Joined May 2008
+            Joined&nbsp;
+            {format(new Date(profile.created_at), 'MMMM YYYY')}
           </UserInfoSmall>
         </div>
         <ButtonWrapper>

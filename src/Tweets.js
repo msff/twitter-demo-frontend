@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import Parser from 'html-react-parser';
+import { format, differenceInSeconds, distanceInWordsToNow } from 'date-fns';
 
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
@@ -77,13 +78,13 @@ const TweetAvatar = styled.img`
   width: 50px;
 `;
 
-const ProfileFullName = styled.span`
+const Title = styled.span`
   color: #292f33;
   font-size: 15px;
   font-weight: 500;
 `;
 
-const ProfileUserName = styled.span`
+const TitleInfo = styled.span`
   color: #707e88;
   font-size: 13px;
   font-weight: 500;
@@ -211,6 +212,14 @@ Media
 }
 export const TweetsNavRoute = withRouter(TweetsNav);
 
+function SmartDate({ date }) {
+  const tweetdate = new Date(date);
+  const distance = differenceInSeconds(Date.now(), tweetdate)
+    ? format(tweetdate, 'MMM D')
+    : distanceInWordsToNow(tweetdate);
+  return distance;
+}
+
 function Images({ images }) {
   const imagescomp = images.map(image => <Image key={image.id} src={image.url} />);
   return (
@@ -235,15 +244,16 @@ Pinned Tweet
       <ContentWrapper>
         <Header>
           <TweetAvatar src={tweet.account.avatar} />
-          <ProfileFullName>
+          <Title>
             {tweet.account.display_name}
-          </ProfileFullName>
-          <span>
-&nbsp;
-          </span>
-          <ProfileUserName>
+            &nbsp;
+          </Title>
+          <TitleInfo>
+            @
             {tweet.account.username}
-          </ProfileUserName>
+            &nbsp;•&nbsp;
+            <SmartDate date={tweet.created_at} />
+          </TitleInfo>
         </Header>
         <Caption small={tweet.media_attachments.length || tweet.content.length > 50}>
           {Parser(tweet.content)}
