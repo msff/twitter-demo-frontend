@@ -41,17 +41,23 @@ const BigAvatar = styled.div`
 `;
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.username = props.match.params.username;
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.id = props.match.params.id;
+  // }
 
   state = {
     profile: {},
   };
 
   componentDidMount() {
-    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/1?access_token=${
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    console.log(id);
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${
       process.env.REACT_APP_ACCESS_TOKEN
     }`;
 
@@ -91,16 +97,16 @@ class Profile extends React.Component {
               <Switch>
                 <Route
                   exact
-                  path="/:username/"
+                  path="/:id/"
                   render={() => (
                     <React.Fragment>
                       <TweetsNavRoute username={this.username} />
-                      <TweetsFeed profile={profile} />
+                      <TweetsFeed />
                     </React.Fragment>
                   )}
                 />
                 <Route
-                  path="/:username/with_replies"
+                  path="/:id/with_replies"
                   render={() => (
                     <React.Fragment>
                       <TweetsNavRoute username={this.username} />
@@ -109,7 +115,7 @@ class Profile extends React.Component {
                   )}
                 />
                 <Route
-                  path="/:username/media"
+                  path="/:id/media"
                   render={() => (
                     <React.Fragment>
                       <TweetsNavRoute username={this.username} />
@@ -117,7 +123,7 @@ class Profile extends React.Component {
                     </React.Fragment>
                   )}
                 />
-                <Route path="/:username" component={ShowUrl} />
+                <Route path="/:id" component={ShowUrl} />
               </Switch>
             </div>
             <div className="col-lg-3">

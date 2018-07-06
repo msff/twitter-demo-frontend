@@ -18,7 +18,7 @@ Every Interactive — Twitter
           </title>
         </Helmet>
         <Switch>
-          <Redirect exact from="/" to="/EveryInteract" />
+          <Redirect exact from="/" to="/1" />
         </Switch>
         <header>
           <Header />
@@ -28,7 +28,7 @@ Every Interactive — Twitter
             <Route path="/moments" component={ShowUrl} />
             <Route path="/notifications" component={ShowUrl} />
             <Route path="/messages" component={ShowUrl} />
-            <Route path="/:username" component={Profile} />
+            <Route path="/:id" component={Profile} />
           </Switch>
         </main>
       </div>

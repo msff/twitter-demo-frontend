@@ -228,7 +228,7 @@ Pinned Tweet
           </ProfileUserName>
         </Header>
         <Caption small={tweet.media_attachments}>
-          {tweet.content}
+          {Parser(tweet.content)}
         </Caption>
         {/* {tweet.img && <Image src={imageurl} />}
         {tweet.link && (
@@ -273,18 +273,19 @@ Pinned Tweet
   );
 }
 
-export default class TweetsFeed extends React.Component {
-  constructor(props) {
-    super(props);
-    this.profile = props.profile;
-  }
-
+class TweetsFeed extends React.Component {
   state = {
     tweets: [],
   };
 
   componentDidMount() {
-    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/1/statuses?access_token=${
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    console.log(this.props);
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${
       process.env.REACT_APP_ACCESS_TOKEN
     }`;
 
@@ -298,8 +299,9 @@ export default class TweetsFeed extends React.Component {
 
   render() {
     const { tweets } = this.state;
-    console.log(tweets);
     const tweetsfeed = tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
     return tweetsfeed;
   }
 }
+
+export default withRouter(TweetsFeed);
