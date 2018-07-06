@@ -200,16 +200,16 @@ const ActionCount = styled.span`
   color: ${({ liked }) => (liked ? '#E2264D' : '#667580')};
 `;
 
-function TweetsNav({ username }) {
+function TweetsNav({ match }) {
   return (
     <NavWrapper>
-      <StNavLink exact to={`/${username}/`}>
+      <StNavLink exact to={`/${match.params.id}/`}>
         Tweets
       </StNavLink>
-      <StNavLink to={`/${username}/with_replies`}>
+      <StNavLink to={`/${match.params.id}/with_replies`}>
 Tweets & replies
       </StNavLink>
-      <StNavLink to={`/${username}/media`}>
+      <StNavLink to={`/${match.params.id}/media`}>
 Media
       </StNavLink>
     </NavWrapper>
@@ -220,9 +220,9 @@ export const TweetsNavRoute = withRouter(TweetsNav);
 function SmartDate({ date }) {
   const tweetdate = new Date(date);
   function hoursminutes(short) {
-    return (differenceInHours(Date.now(), short) < 1
+    return differenceInHours(Date.now(), short) < 1
       ? `${differenceInMinutes(Date.now(), short)}m`
-      : `${differenceInHours(Date.now(), short)}h`);
+      : `${differenceInHours(Date.now(), short)}h`;
   }
   const distance = differenceInHours(Date.now(), tweetdate) < 24
     ? hoursminutes(tweetdate)

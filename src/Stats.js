@@ -53,7 +53,7 @@ function Stats({ profile, match }) {
         <div className="container">
           <div className="row middle-lg">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
-              <StatsBlock exact to={`/${match.params.username}/`}>
+              <StatsBlock exact to={`/${match.params.id}/`}>
                 <StatsBlockHeader>
 Tweets
                 </StatsBlockHeader>
@@ -61,7 +61,7 @@ Tweets
                   {profile.statuses_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/following`}>
+              <StatsBlock to={`/${match.params.id}/following`}>
                 <StatsBlockHeader>
 Following
                 </StatsBlockHeader>
@@ -69,7 +69,7 @@ Following
                   {profile.following_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/followers`}>
+              <StatsBlock to={`/${match.params.id}/followers`}>
                 <StatsBlockHeader>
 Followers
                 </StatsBlockHeader>
@@ -77,7 +77,7 @@ Followers
                   {profile.followers_count}
                 </StatsBlockValue>
               </StatsBlock>
-              {/* <StatsBlock to={`/${match.params.username}/likes`}>
+              {/* <StatsBlock to={`/${match.params.id}/likes`}>
                 <StatsBlockHeader>
 Likes
                 </StatsBlockHeader>
@@ -85,7 +85,7 @@ Likes
 460
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/lists`}>
+              <StatsBlock to={`/${match.params.id}/lists`}>
                 <StatsBlockHeader>
 Lists
                 </StatsBlockHeader>

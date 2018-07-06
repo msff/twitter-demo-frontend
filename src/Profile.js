@@ -93,7 +93,7 @@ class Profile extends React.Component {
                   path="/:id/"
                   render={() => (
                     <React.Fragment>
-                      <TweetsNavRoute username={this.username} />
+                      <TweetsNavRoute />
                       <TweetsFeed />
                     </React.Fragment>
                   )}
