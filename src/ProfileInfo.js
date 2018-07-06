@@ -153,9 +153,9 @@ function Photos({ userphotos }) {
   return photos;
 }
 
-const cleanHTML = {
-  replace: ({ children }) => children,
-};
+// const cleanHTML = {
+//   replace: ({ children }) => children,
+// };
 
 function ProfileInfo({
   match, profile, followers, userphotos,
