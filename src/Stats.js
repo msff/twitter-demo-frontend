@@ -47,8 +47,6 @@ const StatsBlock = styled(NavLink)`
 `;
 
 function Stats({ profile, match }) {
-  console.log(profile.note);
-
   return (
     <div>
       <StatsWrapper>
