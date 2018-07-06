@@ -1,7 +1,6 @@
 // Shared components import
 import React from 'react';
 import styled from 'styled-components';
-import Parser from 'html-react-parser';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ import ShowUrl from './EmptyLink';
 
 // Data import
 import {
-  tweets, whotofollow, trends, followersyouknow, userphotos,
+  whotofollow, trends, followersyouknow, userphotos,
 } from './data';
 
 // Header images

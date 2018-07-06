@@ -77,8 +77,8 @@ const TweetAvatar = styled.div`
   margin-left: -60px;
   width: 50px;
   height: 50px;
-    border-radius: 100%;
-    background-image: url('${({ src }) => src}');
+  border-radius: 100%;
+  background-image: url('${({ src }) => src}');
   background-size: cover;
   background-position: center center;
 `;
@@ -235,7 +235,6 @@ function Images({ images }) {
 }
 
 function Tweet({ tweet }) {
-  console.log(tweet.media_attachments);
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -317,7 +316,6 @@ class TweetsFeed extends React.Component {
         params: { id },
       },
     } = this.props;
-    console.log(this.props);
     const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${
       process.env.REACT_APP_ACCESS_TOKEN
     }`;
