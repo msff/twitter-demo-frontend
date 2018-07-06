@@ -51,7 +51,6 @@ class Profile extends React.Component {
         params: { id },
       },
     } = this.props;
-    console.log(id);
     const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${
       process.env.REACT_APP_ACCESS_TOKEN
     }`;
