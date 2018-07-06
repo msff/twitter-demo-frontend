@@ -41,11 +41,6 @@ const BigAvatar = styled.div`
 `;
 
 class Profile extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.id = props.match.params.id;
-  // }
-
   state = {
     profile: {},
   };
