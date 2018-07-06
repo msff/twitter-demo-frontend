@@ -89,7 +89,7 @@ const ProfileUserName = styled.span`
   font-weight: 500;
 `;
 
-const Caption = styled.p`
+const Caption = styled.div`
   margin-top: 4px;
   margin-bottom: 4px;
   font-size: 24px;
@@ -103,10 +103,18 @@ const Caption = styled.p`
 `;
 
 const Image = styled.img`
+  max-height: 250px;
+  flex-basis: 30px;
+  flex-grow: 0;
+`;
+
+const ImageWrapper = styled.div`
   margin-top: 13px;
   margin-bottom: 3px;
   max-width: 100%;
-  max-height: 250px;
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 30px;
 `;
 
 // Link preview
@@ -203,7 +211,17 @@ Media
 }
 export const TweetsNavRoute = withRouter(TweetsNav);
 
+function Images({ images }) {
+  const imagescomp = images.map(image => <Image key={image.id} src={image.url} />);
+  return (
+    <ImageWrapper count={images.length}>
+      {imagescomp}
+    </ImageWrapper>
+  );
+}
+
 function Tweet({ tweet }) {
+  console.log(tweet.media_attachments);
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -227,11 +245,11 @@ Pinned Tweet
             {tweet.account.username}
           </ProfileUserName>
         </Header>
-        <Caption small={tweet.media_attachments}>
+        <Caption small={tweet.media_attachments.length || tweet.content.length > 50}>
           {Parser(tweet.content)}
         </Caption>
-        {/* {tweet.img && <Image src={imageurl} />}
-        {tweet.link && (
+        {tweet.media_attachments && <Images images={tweet.media_attachments} />}
+        {/* {tweet.link && (
           <OGLinkPreview href={tweet.link.url}>
             <OGLinkImage src={tweet.link.image} alt={tweet.link.title} />
             <div>
