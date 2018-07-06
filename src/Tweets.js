@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import Parser from 'html-react-parser';
+import domToReact from 'html-react-parser/lib/dom-to-react';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
 import pinned from './icons/icon-pinned.svg';
@@ -95,7 +96,7 @@ const TitleInfo = styled.span`
   font-weight: 500;
 `;
 
-const Caption = styled.div`
+const CaptionWrapper = styled.div`
   margin-top: 4px;
   margin-bottom: 4px;
   font-size: 24px;
@@ -106,6 +107,20 @@ const Caption = styled.div`
       line-height: 22px;
       font-weight: 400;
     `};
+`;
+
+const Caption = styled.p`
+  margin: 0;
+  padding: 0;
+`;
+const CaptionLink = styled.a`
+  margin: 0;
+  padding: 0;
+  color: #1da1f2;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Image = styled.img`
@@ -239,6 +254,30 @@ function Images({ images }) {
   );
 }
 
+const captionHtmlRenderer = {
+  replace: (domNode) => {
+    console.log(domNode);
+    if (!domNode.attribs) return;
+    if (domNode.name === 'p') {
+      return (
+        <Caption>
+          {domToReact(domNode.children, captionHtmlRenderer)}
+        </Caption>
+      );
+    }
+    if (domNode.name === 'a') {
+      return (
+        <CaptionLink>
+          {domToReact(domNode.children, captionHtmlRenderer)}
+        </CaptionLink>
+      );
+    }
+    if (domNode.attribs.class === 'invisible') {
+return <span/>;
+    }
+  },
+};
+
 function Tweet({ tweet }) {
   return (
     <MainWrapper>
@@ -264,9 +303,9 @@ Pinned Tweet
             <SmartDate date={tweet.created_at} />
           </TitleInfo>
         </Header>
-        <Caption small={tweet.media_attachments.length || tweet.content.length > 50}>
-          {Parser(tweet.content)}
-        </Caption>
+        <CaptionWrapper small={tweet.media_attachments.length || tweet.content.length > 50}>
+          {Parser(tweet.content, captionHtmlRenderer)}
+        </CaptionWrapper>
         {tweet.media_attachments && <Images images={tweet.media_attachments} />}
         {/* {tweet.link && (
           <OGLinkPreview href={tweet.link.url}>
