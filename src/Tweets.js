@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import Parser from 'html-react-parser';
-import { format, differenceInSeconds, distanceInWordsToNow } from 'date-fns';
+import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
@@ -219,9 +219,14 @@ export const TweetsNavRoute = withRouter(TweetsNav);
 
 function SmartDate({ date }) {
   const tweetdate = new Date(date);
-  const distance = differenceInSeconds(Date.now(), tweetdate)
-    ? format(tweetdate, 'MMM D')
-    : distanceInWordsToNow(tweetdate);
+  function hoursminutes(short) {
+    return (differenceInHours(Date.now(), short) < 1
+      ? `${differenceInMinutes(Date.now(), short)}m`
+      : `${differenceInHours(Date.now(), short)}h`);
+  }
+  const distance = differenceInHours(Date.now(), tweetdate) < 24
+    ? hoursminutes(tweetdate)
+    : format(tweetdate, 'MMM D');
   return distance;
 }
 
