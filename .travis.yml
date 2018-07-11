@@ -8,7 +8,7 @@ script: npm test # Here you could also run the build step of your application
 before_deploy: npm install now --no-save # Install Now CLI on Travis
 deploy:
   - provider: script # Run a custom deployment script which we will define below
-    script: now --token $NOW_TOKEN -e REACT_APP_ACCESS_TOKEN=$API_TOKEN
+    script: now --public --token $NOW_TOKEN -e REACT_APP_ACCESS_TOKEN=$API_TOKEN
     skip_cleanup: true
     on:
       all_branches: true # For testing purposes
