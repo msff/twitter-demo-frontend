@@ -373,7 +373,12 @@ class TweetsFeed extends React.Component {
 
   render() {
     const { tweets } = this.state;
-    const tweetsfeed = tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
+  const tweetsfeed = tweets.error ? (
+  <h1>
+  Error loading tweets: 
+  {tweets.error}
+  </h1>
+  ) : tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
     return tweetsfeed;
   }
 }

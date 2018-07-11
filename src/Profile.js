@@ -64,67 +64,82 @@ class Profile extends React.Component {
 
   render() {
     const { profile } = this.state;
+    console.log(profile);
     return (
       <div>
-        <Helmet>
-          <title>
-            {`${profile.display_name} — Twitter`}
-          </title>
-        </Helmet>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3">
-              <BigAvatar src={profile.avatar} alt={profile.username} />
+        {profile.error && (
+          <h1>
+            Error:&nbsp;
+            {profile.error}
+          </h1>
+        )}
+        {!profile.error && (
+          <React.Fragment>
+            <Helmet>
+              <title>
+                {`${profile.display_name} — Twitter`}
+              </title>
+            </Helmet>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3">
+                  <BigAvatar src={profile.avatar} alt={profile.username} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <StHeaderImage src={profile.header} alt={profile.username} />
+            <StHeaderImage src={profile.header} alt={profile.username} />
 
-        <Stats profile={profile} />
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3 start-lg">
-              <ProfileInfo profile={profile} followers={followersyouknow} userphotos={userphotos} />
+            <Stats profile={profile} />
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3 start-lg">
+                  <ProfileInfo
+                    profile={profile}
+                    followers={followersyouknow}
+                    userphotos={userphotos}
+                  />
+                </div>
+                <div className="col-lg-6 start-lg">
+                  <Switch>
+                    <Route
+                      exact
+                      path="/:id/"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute />
+                          <TweetsFeed />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/with_replies"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute username={this.username} />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/media"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute username={this.username} />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route path="/:id" component={ShowUrl} />
+                  </Switch>
+                </div>
+                <div className="col-lg-3">
+                  <Trends trends={trends} />
+                  <WhoToFollow whotofollow={whotofollow} />
+                </div>
+              </div>
             </div>
-            <div className="col-lg-6 start-lg">
-              <Switch>
-                <Route
-                  exact
-                  path="/:id/"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute />
-                      <TweetsFeed />
-                    </React.Fragment>
-                  )}
-                />
-                <Route
-                  path="/:id/with_replies"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute username={this.username} />
-                      <ShowUrl />
-                    </React.Fragment>
-                  )}
-                />
-                <Route
-                  path="/:id/media"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute username={this.username} />
-                      <ShowUrl />
-                    </React.Fragment>
-                  )}
-                />
-                <Route path="/:id" component={ShowUrl} />
-              </Switch>
-            </div>
-            <div className="col-lg-3">
-              <Trends trends={trends} />
-              <WhoToFollow whotofollow={whotofollow} />
-            </div>
-          </div>
-        </div>
+          </React.Fragment>
+        )}
       </div>
     );
   }
