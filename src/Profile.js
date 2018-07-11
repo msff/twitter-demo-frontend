@@ -77,7 +77,7 @@ class Profile extends React.Component {
           <React.Fragment>
             <Helmet>
               <title>
-                {`${profile.display_name} — Twitter`}
+                {`${profile.display_name} — Twitter Demo`}
               </title>
             </Helmet>
             <div className="container">
