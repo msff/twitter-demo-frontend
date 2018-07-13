@@ -3062,6 +3062,10 @@ flexboxgrid2@^7.2.1:
   dependencies:
     normalize.css "^7.0.0"
 
+flow-bin@^0.76.0:
+  version "0.76.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.76.0.tgz#eb00036991c3abc106743fcbc7ee321f02aa4faa"
+
 follow-redirects@^1.0.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.0.tgz#234f49cf770b7f35b40e790f636ceba0c3a0ab77"
