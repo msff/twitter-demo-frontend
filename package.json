@@ -6,6 +6,7 @@
     "date-fns": "^1.29.0",
     "flexboxgrid2": "^7.2.1",
     "flow-bin": "^0.76.0",
+    "flow-typed": "^2.5.1",
     "html-react-parser": "^0.4.6",
     "now": "^11.2.9",
     "react": "^16.4.1",
