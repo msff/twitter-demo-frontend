@@ -11,4 +11,4 @@ deploy:
     script: now --public --token $NOW_TOKEN -e REACT_APP_ACCESS_TOKEN=$API_TOKEN
     skip_cleanup: true
     on:
-      all_branches: true # For testing purposes
+      master: true
