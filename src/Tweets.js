@@ -147,51 +147,6 @@ const ImageWrapper = styled.div`
   flex-basis: 30px;
 `;
 
-// Link preview
-
-// const OGLinkPreview = styled.a`
-//   margin-top: 13px;
-//   margin-bottom: 3px;
-//   display: flex;
-
-//   flex-direction: row;
-//   border: 1px solid #e1e8ed;
-//   border-radius: 4px;
-//   text-decoration: none;
-//   color: #000000;
-// `;
-
-// const OGLinkImage = styled.img`
-//   margin-right: 9px;
-//   border-right: 1px solid #e1e8ed;
-//   height: 126px;
-// `;
-
-// const OGLinkTitle = styled.p`
-//   margin: 11px 0 0 0;
-//   font-weight: 600;
-//   font-size: 15px;
-//   line-height: 22px;
-// `;
-
-// const OGLinkDescription = styled.p`
-//   margin: 0;
-//   font-weight: 400;
-//   font-size: 15px;
-//   line-height: 21px;
-//   text-overflow: ellipsis;
-//   overflow: hidden;
-//   max-height: 63px;
-// `;
-
-// const OGLinkURL = styled.p`
-//   margin: 0;
-//   font-weight: 400;
-//   font-size: 15px;
-//   line-height: 21px;
-//   color: #8899a6;
-// `;
-
 // Actions block
 
 const ActionWrapper = styled.div`
@@ -315,23 +270,6 @@ Pinned Tweet
           {Parser(tweet.content, captionHtmlRenderer)}
         </CaptionWrapper>
         {tweet.media_attachments && <Images images={tweet.media_attachments} />}
-        {/* {tweet.link && (
-          <OGLinkPreview href={tweet.link.url}>
-            <OGLinkImage src={tweet.link.image} alt={tweet.link.title} />
-            <div>
-              <OGLinkTitle>
-                {tweet.link.title}
-              </OGLinkTitle>
-              <OGLinkDescription>
-                {tweet.link.description}
-              </OGLinkDescription>
-              <OGLinkURL>
-                {tweet.link.url}
-              </OGLinkURL>
-            </div>
-          </OGLinkPreview>
-        )} */}
-
         <ActionWrapper>
           <ActionBlock to={`${tweet.id}/reply`}>
             <ActionIcon src={replies} />
