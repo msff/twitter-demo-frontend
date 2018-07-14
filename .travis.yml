@@ -1,14 +1,17 @@
 language: node_js
 node_js:
-  - "node"
+- node
 cache:
   directories:
-    - "node_modules" # This will tell Travis CI to cache the dependencies
-script: npm test # Here you could also run the build step of your application
-before_deploy: npm install now --no-save # Install Now CLI on Travis
+  - node_modules
+script: npm test
+before_deploy: npm install now --no-save
 deploy:
-  - provider: script # Run a custom deployment script which we will define below
-    script: now --public --token $NOW_TOKEN -e REACT_APP_ACCESS_TOKEN=$API_TOKEN
-    skip_cleanup: true
-    on:
-      master: true
+- provider: script
+  script: now --public --token $NOW_TOKEN -e REACT_APP_ACCESS_TOKEN=$API_TOKEN
+  skip_cleanup: true
+  on:
+    master: true
+env:
+  matrix:
+    secure: kbIROpE+8BCyzYjdcVf91NfLfufnKtlC0Ifif6nBo10Mo9ohHwKG4DZrcxvDygsMxWZ+xALLAu0iMS5r1RFGAv3ZD2TYz73MmQCX0A8YvPVwMdfnZssRer9pNh9tvj/+Kx1sW4uNudVASDLoVebC5JzGciThn4VOsa7mrUu6ZNvK121QyBnaYu3cvmhXs5bOOW4OYk2BlT0lzg3aBScpom7KnEaPT9xKomGPLpjof+FnTFnqe/p9J81kWRTLVSSQo8T+wsFsOxz4wtpkvmMoHAecsg/DBa3rrRs3rY58vd4qCRk8zIgKFqFDtpz3r5a9HFpdyKVFNaLInFhzmowYqb/NUWL5JHReF0kRI7Ygwg3yweUj28U5+9A/VLqeUxqxTlrkuuoN/jQMonHPwlJY+6rMmyt9+CdcDN9HQkBilxt5cMXYd1YVhNu4YbIWdFDwu0WYVfah0X6VyjXADKsbnwpQN/aWjHTajp6s8VBuHJ3R0gRti3lxp8Go1rjnsljTcbXnacPse+M6SUvT15uTMz82zprtCSjlm2FS+gPenyJUWfLYjNQ6RW3b7qSMawv9d9wXK//RkhiY5nWeDwWVf1UHPO8rcNtNIqGct9X73uFf2moyDAOFuv3bBPNyisaYgKBYxFmXQezMp9q1DfUJfxXp7Ihjx15LiAMo/MmjnrA=
