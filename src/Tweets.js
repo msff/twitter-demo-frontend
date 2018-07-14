@@ -1,9 +1,12 @@
+// @flow
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import Parser from 'html-react-parser';
 import domToReact from 'html-react-parser/lib/dom-to-react';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
+
+import type { Match } from 'react-router-dom';
 
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
@@ -348,7 +351,81 @@ Pinned Tweet
   );
 }
 
-class TweetsFeed extends React.Component {
+// Types definition
+
+type Account = {
+  id: number,
+  username: string,
+  acct: string,
+  display_name: string,
+  locked: boolean,
+  bot: ?boolean,
+  created_at: string,
+  note: string,
+  url: string,
+  avatar: string,
+  avatar_static: string,
+  header: string,
+  header_static: string,
+  followers_count: ?number,
+  following_count: ?number,
+  statuses_count: ?number,
+  emojis: mixed[],
+  fields: ?(mixed[]),
+};
+
+type Attachment = {
+  id: number,
+  type: string,
+  url: string,
+  preview_url: string,
+  remote_url: ?string,
+  text_url: ?string,
+  meta: ?{},
+  description: ?string,
+};
+
+type TweetT = {
+  id: number,
+  created_at: string,
+  in_reply_to_id: ?number,
+  in_reply_to_account_id: ?number,
+  sensitive: boolean,
+  spoiler_text: ?string,
+  visibility: string,
+  language: string,
+  uri: string,
+  content: string,
+  url: string,
+  reblogs_count: ?number,
+  favourites_count: ?number,
+  favourited: boolean,
+  reblogged: boolean,
+  muted: boolean,
+  pinned: boolean,
+  reblog: ?boolean,
+  application: {
+    name: ?string,
+    website: ?string,
+  },
+  account: Account,
+  media_attachments: Attachment[],
+  mentions: mixed[],
+  tags: mixed[],
+  emojis: mixed[],
+};
+
+type Props = {
+  match: Match,
+};
+
+type State = {
+  tweets: TweetT[],
+};
+
+// Components
+
+class TweetsFeed extends React.Component<Props, State> {
   state = {
     tweets: [],
   };
@@ -359,9 +436,11 @@ class TweetsFeed extends React.Component {
         params: { id },
       },
     } = this.props;
-    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${
-      process.env.REACT_APP_ACCESS_TOKEN
-    }`;
+
+    const env = process.env || {};
+    const secretKey = env.REACT_APP_ACCESS_TOKEN;
+    if (!secretKey) throw new Error('missing REACT_APP_ACCESS_TOKEN');
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${secretKey}`;
 
     fetch(url)
       .then(response => response.json())
@@ -373,12 +452,17 @@ class TweetsFeed extends React.Component {
 
   render() {
     const { tweets } = this.state;
-  const tweetsfeed = tweets.error ? (
-  <h1>
-  Error loading tweets: 
-  {tweets.error}
-  </h1>
-  ) : tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
+    // const tweetsfeed = tweets.error ? (
+    //   <Title>
+    //     Error loading tweets:
+    //     {tweets.error}
+    //   </Title>
+    // ) : (
+    //   tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />)
+    // );
+    // return tweetsfeed;
+
+    const tweetsfeed = tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
     return tweetsfeed;
   }
 }
