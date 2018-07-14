@@ -4,8 +4,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import Parser from 'html-react-parser';
-import domToReact from 'html-react-parser/lib/dom-to-react';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
 // Types import
@@ -116,19 +114,21 @@ const CaptionWrapper = styled.div`
       line-height: 22px;
       font-weight: 400;
     `};
-`;
-
-const Caption = styled.p`
-  margin: 0;
-  padding: 0;
-`;
-const CaptionLink = styled.a`
-  margin: 0;
-  padding: 0;
-  color: #1da1f2;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
+  > p {
+    margin: 0;
+    padding: 0;
+    > a {
+      color: #1da1f2;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        > span {
+           {
+            props.class === 'invisible' && text-decoration: none;
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -218,30 +218,8 @@ function Images({ images }) {
   );
 }
 
-const captionHtmlRenderer = {
-  replace: (domNode) => {
-    if (!domNode.attribs) return domToReact(domNode);
-    if (domNode.name === 'p') {
-      return (
-        <Caption>
-          {domToReact(domNode.children, captionHtmlRenderer)}
-        </Caption>
-      );
-    }
-    if (domNode.name === 'a') {
-      return (
-        <CaptionLink>
-          {domToReact(domNode.children, captionHtmlRenderer)}
-        </CaptionLink>
-      );
-    }
-    if (domNode.attribs.class === 'invisible') {
-      return <span />;
-    }
-  },
-};
-
 function Tweet({ tweet }) {
+  const caption = { __html: tweet.content };
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -266,9 +244,10 @@ Pinned Tweet
             <SmartDate date={tweet.created_at} />
           </TitleInfo>
         </Header>
-        <CaptionWrapper small={tweet.media_attachments.length || tweet.content.length > 50}>
-          {Parser(tweet.content, captionHtmlRenderer)}
-        </CaptionWrapper>
+        <CaptionWrapper
+          small={tweet.media_attachments.length || tweet.content.length > 50}
+          dangerouslySetInnerHTML={caption}
+        />
         {tweet.media_attachments && <Images images={tweet.media_attachments} />}
         <ActionWrapper>
           <ActionBlock to={`${tweet.id}/reply`}>
