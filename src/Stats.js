@@ -78,22 +78,6 @@ Followers
                   {profile.followers_count}
                 </StatsBlockValue>
               </StatsBlock>
-              {/* <StatsBlock to={`/${match.params.id}/likes`}>
-                <StatsBlockHeader>
-Likes
-                </StatsBlockHeader>
-                <StatsBlockValue>
-460
-                </StatsBlockValue>
-              </StatsBlock>
-              <StatsBlock to={`/${match.params.id}/lists`}>
-                <StatsBlockHeader>
-Lists
-                </StatsBlockHeader>
-                <StatsBlockValue>
-2
-                </StatsBlockValue>
-              </StatsBlock> */}
             </div>
             <div className="c col-lg-3 end-lg">
               <ActionButton outline>
