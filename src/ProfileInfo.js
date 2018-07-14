@@ -12,7 +12,7 @@ import iconLocation from './icons/icon-location.svg';
 import iconFollowers from './icons/icon-followers.svg';
 import iconPhotos from './icons/icon-photos.svg';
 
-import { SectionSubheader, SectionFlexWrapper } from './Shared';
+import { SectionSubheader, SectionFlexWrapper } from './shared/Shared';
 
 const SectionWrapper = styled.div`
   margin-top: 40px;
