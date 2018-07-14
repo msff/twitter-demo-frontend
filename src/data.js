@@ -100,31 +100,37 @@ export const whotofollow = [
 
 export const trends = [
   {
+    id: 1,
     header: '#BringYourDogToWorkDay',
     tweets: '',
     caption: '',
   },
   {
+    id: 2,
     header: '#FridayFeeling',
     tweets: '12.1K', // понятно, что хорошо бы строкой, но пока так
     caption: '',
   },
   {
+    id: 3,
     header: '#BrexitAnniversary',
     tweets: '',
     caption: 'It’s one year since the UK voted to leave the European Union',
   },
   {
+    id: 4,
     header: 'HMS Queen Elizabeth',
     tweets: '1,036',
     caption: '',
   },
   {
+    id: 5,
     header: 'Joe Budden',
     tweets: '1,036',
     caption: '',
   },
   {
+    id: 6,
     header: 'Trident',
     tweets: '6,136',
     caption: '',
