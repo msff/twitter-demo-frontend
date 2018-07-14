@@ -105,7 +105,8 @@ const MorePeopleIcon = styled.img`
 `;
 
 function WTFItem({ profile }) {
-  const avatarurl = `${process.env.PUBLIC_URL}${profile.avatar}`;
+  const publicurl = process.env.PUBLIC_URL || '';
+  const avatarurl = `${publicurl}${profile.avatar}`;
   return (
     <SingleUser>
       <ItemAvatar src={avatarurl} alt="avatar" />
