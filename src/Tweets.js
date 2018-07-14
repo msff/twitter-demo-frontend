@@ -233,6 +233,7 @@ const captionHtmlRenderer = {
 };
 
 function Tweet({ tweet }) {
+  const caption = {__html: tweet.content}
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -257,9 +258,10 @@ Pinned Tweet
             <SmartDate date={tweet.created_at} />
           </TitleInfo>
         </Header>
-        <CaptionWrapper small={tweet.media_attachments.length || tweet.content.length > 50}>
-          {Parser(tweet.content, captionHtmlRenderer)}
-        </CaptionWrapper>
+        <CaptionWrapper
+          small={tweet.media_attachments.length || tweet.content.length > 50}
+          dangerouslySetInnerHTML={caption}
+        />          
         {tweet.media_attachments && <Images images={tweet.media_attachments} />}
         <ActionWrapper>
           <ActionBlock to={`${tweet.id}/reply`}>
@@ -311,12 +313,14 @@ class TweetsFeed extends React.Component {
 
   render() {
     const { tweets } = this.state;
-  const tweetsfeed = tweets.error ? (
-  <h1>
-  Error loading tweets: 
-  {tweets.error}
-  </h1>
-  ) : tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
+    const tweetsfeed = tweets.error ? (
+      <h1>
+        Error loading tweets:
+        {tweets.error}
+      </h1>
+    ) : (
+      tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />)
+    );
     return tweetsfeed;
   }
 }
