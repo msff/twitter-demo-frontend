@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import {
-  BgSectionWrapper,
-  BgSectionHeaderWrapper,
-  SectionHeader,
-  SectionLink,
+  BgSectionWrapper, BgSectionHeaderWrapper, SectionHeader, SectionLink,
 } from './Shared';
 
 // Trends specific components
@@ -33,34 +30,32 @@ const TrendBlockCaption = styled.div`
   color: #657786;
 `;
 
-function TrendSingle(props) {
+function TrendSingle({ trend }) {
   return (
     <TrendBlock>
-      <TrendBlockHeader to={`/${props.trend.header}`}>
-        {props.trend.header}
+      <TrendBlockHeader to={`/${trend.header}`}>
+        {trend.header}
       </TrendBlockHeader>
-      {props.trend.tweets && (
-        <TrendBlockCaption>
-          {`${props.trend.tweets} Tweets`}
-        </TrendBlockCaption>
+      {trend.tweets && (
+      <TrendBlockCaption>
+        {`${trend.tweets} Tweets`}
+      </TrendBlockCaption>
       )}
-      {props.trend.caption && (
-        <TrendBlockCaption>
-          {props.trend.caption}
-        </TrendBlockCaption>
+      {trend.caption && (
+      <TrendBlockCaption>
+        {trend.caption}
+      </TrendBlockCaption>
       )}
     </TrendBlock>
   );
 }
 
 function TrendsList(props) {
-  const trenditems = props.trends.map((trend, index) => (
-    <TrendSingle key={index} trend={trend} />
-  ));
+  const trenditems = props.trends.map(trend => <TrendSingle key={trend.id} trend={trend} />);
   return trenditems;
 }
 
-export default function Trends(props) {
+export default function Trends({ trends }) {
   return (
     <div>
       <BgSectionWrapper>
@@ -75,7 +70,7 @@ United Kingdom Trends
 Change
           </SectionLink>
         </BgSectionHeaderWrapper>
-        <TrendsList trends={props.trends} />
+        <TrendsList trends={trends} />
       </BgSectionWrapper>
     </div>
   );
