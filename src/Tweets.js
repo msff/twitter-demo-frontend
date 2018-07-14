@@ -1,8 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import Parser from 'html-react-parser';
-import domToReact from 'html-react-parser/lib/dom-to-react';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
 import pinned from './icons/icon-pinned.svg';
