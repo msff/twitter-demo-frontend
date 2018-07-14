@@ -88,7 +88,6 @@ class Profile extends React.Component<Props, State> {
     const secretKey = env.REACT_APP_ACCESS_TOKEN;
     if (!secretKey) throw new Error('missing REACT_APP_ACCESS_TOKEN');
     const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${secretKey}`;
-
     fetch(url)
       .then(response => response.json())
       .then(responseAsJson => this.setState({ profile: responseAsJson }))
