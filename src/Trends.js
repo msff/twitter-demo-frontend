@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   BgSectionWrapper,
   BgSectionHeaderWrapper,
   SectionHeader,
-  SectionLink
-} from "./Shared";
+  SectionLink,
+} from './Shared';
 
 // Trends specific components
 
@@ -36,14 +36,18 @@ const TrendBlockCaption = styled.div`
 function TrendSingle(props) {
   return (
     <TrendBlock>
-      <TrendBlockHeader to={"/" + props.trend.header}>
+      <TrendBlockHeader to={`/${props.trend.header}`}>
         {props.trend.header}
       </TrendBlockHeader>
       {props.trend.tweets && (
-        <TrendBlockCaption>{props.trend.tweets + " Tweets"}</TrendBlockCaption>
+        <TrendBlockCaption>
+          {`${props.trend.tweets} Tweets`}
+        </TrendBlockCaption>
       )}
       {props.trend.caption && (
-        <TrendBlockCaption>{props.trend.caption}</TrendBlockCaption>
+        <TrendBlockCaption>
+          {props.trend.caption}
+        </TrendBlockCaption>
       )}
     </TrendBlock>
   );
@@ -61,9 +65,15 @@ export default function Trends(props) {
     <div>
       <BgSectionWrapper>
         <BgSectionHeaderWrapper>
-          <SectionHeader>United Kingdom Trends</SectionHeader>
-          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
-          <SectionLink to="trendschange">Change</SectionLink>
+          <SectionHeader>
+United Kingdom Trends
+          </SectionHeader>
+          <small>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+          </small>
+          <SectionLink to="trendschange">
+Change
+          </SectionLink>
         </BgSectionHeaderWrapper>
         <TrendsList trends={props.trends} />
       </BgSectionWrapper>

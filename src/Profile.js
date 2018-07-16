@@ -1,25 +1,21 @@
 // Shared components import
-import React from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 // Owned components import
-import Stats from "./Stats.js";
-import ProfileInfo from "./ProfileInfo";
-import TweetsFeed from "./Tweets";
-import Trends from "./Trends";
-import WhoToFollow from "./WhoToFollow";
-
-//import { ActionButton } from "./App";
+import Stats from './Stats';
+import ProfileInfo from './ProfileInfo';
+import TweetsFeed, { TweetsNavRoute } from './Tweets';
+import Trends from './Trends';
+import WhoToFollow from './WhoToFollow';
+import ShowUrl from './EmptyLink';
 
 // Data import
 import {
-  tweets,
-  whotofollow,
-  trends,
-  followersyouknow,
-  userphotos
-} from "./data";
+  tweets, whotofollow, trends, followersyouknow, userphotos,
+} from './data';
 
 // Header images
 
@@ -34,56 +30,33 @@ const BigAvatar = styled.div`
   z-index: 3;
   width: 210px;
   height: 210px;
-
   border-radius: 100%;
   border: 1px solid #E7ECF0;
   background-color: #fff;
-  background-image: url('${props => props.src}');
+  background-image: url('${({ src }) => src}');
   background-size: cover;
   background-position: center center;
 `;
 
-// Navigation bar
-
-const TweetsNavLink = styled(NavLink)`
-  padding: 15px 15px 10px 15px;
-  color: #1da1f2;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-  &.active {
-    color: #ecc069;
-  }
-`;
-
-const TweetsNav = styled.div`
-  margin-top: 8px;
-  background-color: #ffffff;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-color: #d8d8d8;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: flex-start;
-`;
-
-function Profile(props) {
+function Profile({ match }) {
+  const username = match.params.username;
   return (
     <div>
+      <Helmet>
+        <title>
+          {match.params.username}
+          {' '}
+— Twitter
+        </title>
+      </Helmet>
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
-            <BigAvatar
-              src={process.env.PUBLIC_URL + "/img/ei-avatar-large.png"}
-            />
+            <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
           </div>
         </div>
       </div>
-      <StHeaderImage
-        src={process.env.PUBLIC_URL + "/img/ei-cover.jpg"}
-        alt="everyinteract"
-      />
+      <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
 
       <Stats />
       <div className="container">
@@ -92,13 +65,37 @@ function Profile(props) {
             <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
           </div>
           <div className="col-lg-6 start-lg">
-            <TweetsNav>
-              <TweetsNavLink to="tweets">Tweets</TweetsNavLink>
-              <TweetsNavLink to="replies">Tweets & replies</TweetsNavLink>
-              <TweetsNavLink to="media">Media</TweetsNavLink>
-            </TweetsNav>
-
-            <TweetsFeed tweets={tweets} />
+            <Switch>
+              <Route
+                exact
+                path="/:username/"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <TweetsFeed tweets={tweets} />
+                  </React.Fragment>
+                )}
+              />
+              <Route
+                path="/:username/with_replies"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <ShowUrl />
+                  </React.Fragment>
+                )}
+              />
+              <Route
+                path="/:username/media"
+                render={() => (
+                  <React.Fragment>
+                    <TweetsNavRoute username={username} />
+                    <ShowUrl />
+                  </React.Fragment>
+                )}
+              />
+              <Route path="/:username" component={ShowUrl} />
+            </Switch>
           </div>
           <div className="col-lg-3">
             <Trends trends={trends} />
@@ -110,4 +107,4 @@ function Profile(props) {
   );
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
-//Column wrappers and header
+// Column wrappers and header
 
 export const BgSectionWrapper = styled.div`
   margin-top: 8px;
@@ -36,6 +36,23 @@ export const SectionLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const ActionButton = styled.button`
+  width: 72px;
+  height: 32px;
+  background-color: #1da1f2;
+  border-style: none;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  ${({ outline }) => outline
+    && css`
+      background-color: #fff;
+      color: #1da1f2;
+      border: 1px solid #1da1f2;
+    `};
 `;
 
 // Followers and Photos shared components

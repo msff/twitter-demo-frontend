@@ -1,17 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
-  BgSectionWrapper,
-  BgSectionHeaderWrapper,
-  SectionHeader,
-  SectionLink
-} from "./Shared";
+  BgSectionWrapper, BgSectionHeaderWrapper, SectionHeader, SectionLink,
+} from './Shared';
 
-import iconDelete from "./icons/icon-delete.svg";
-import verified from "./icons/verified.png";
-import morePeople from "./icons/icon-people.svg";
+import iconDelete from './icons/icon-delete.svg';
+import verified from './icons/verified.png';
+import morePeople from './icons/icon-people.svg';
 
 // Who To Follow specific components
 
@@ -107,24 +104,35 @@ const MorePeopleIcon = styled.img`
   margin-right: 6px;
 `;
 
-function WTFItem(props) {
-  const avatarurl = `${process.env.PUBLIC_URL}${props.profile.avatar}`;
+function WTFItem({ profile }) {
+  const avatarurl = `${process.env.PUBLIC_URL}${profile.avatar}`;
   return (
     <SingleUser>
       <ItemAvatar src={avatarurl} alt="avatar" />
       <UserContent>
-        <ProfileLink to={"/" + props.profile.username}>
-          <UserFullname>{props.profile.user}</UserFullname>
-          <small>&nbsp;</small>
-          {props.profile.verified && (
+        <ProfileLink to={`/${profile.username}`}>
+          <UserFullname>
+            {profile.user}
+          </UserFullname>
+          <small>
+&nbsp;
+          </small>
+          {profile.verified && (
             <span>
               <IsVerified src={verified} />
-              <small>&nbsp;</small>
+              <small>
+&nbsp;
+              </small>
             </span>
           )}
-          <UserUsername>@{props.profile.username}</UserUsername>
+          <UserUsername>
+            @
+            {profile.username}
+          </UserUsername>
         </ProfileLink>
-        <FollowButton>Follow</FollowButton>
+        <FollowButton>
+Follow
+        </FollowButton>
       </UserContent>
       <DeleteIcon src={iconDelete} />
     </SingleUser>
@@ -132,24 +140,34 @@ function WTFItem(props) {
 }
 
 export function WTFItems(props) {
-  const wtfitems = props.whotofollowitems.map((profile, index) => (
-    <WTFItem key={index} profile={profile} />
+  const wtfitems = props.whotofollowitems.map(profile => (
+    <WTFItem key={profile.username} profile={profile} />
   ));
   return wtfitems;
 }
 
-export default function WhoToFollow(props) {
+export default function WhoToFollow({ whotofollow }) {
   return (
     <div>
       <BgSectionWrapper>
         <BgSectionHeaderWrapper>
-          <SectionHeader>Who to follow</SectionHeader>
-          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
-          <SectionLink to="refresh">Refresh</SectionLink>
-          <small>&nbsp;&nbsp;·&nbsp;&nbsp;</small>
-          <SectionLink to="viewall">View all</SectionLink>
+          <SectionHeader>
+Who to follow
+          </SectionHeader>
+          <small>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+          </small>
+          <SectionLink to="refresh">
+Refresh
+          </SectionLink>
+          <small>
+&nbsp;&nbsp;·&nbsp;&nbsp;
+          </small>
+          <SectionLink to="viewall">
+View all
+          </SectionLink>
         </BgSectionHeaderWrapper>
-        <WTFItems whotofollowitems={props.whotofollow} />
+        <WTFItems whotofollowitems={whotofollow} />
         <MorePeopleLink to="more">
           <MorePeopleIcon src={morePeople} />
           Find people you know
