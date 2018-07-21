@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
@@ -70,25 +71,30 @@ const PinnedLabel = styled.span`
 
 const Header = styled.div``;
 
-const TweetAvatar = styled.img`
+const TweetAvatar = styled.div`
   position: absolute;
   margin-left: -60px;
   width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background-image: url('${({ src }) => src}');
+  background-size: cover;
+  background-position: center center;
 `;
 
-const ProfileFullName = styled.span`
+const Title = styled.span`
   color: #292f33;
   font-size: 15px;
   font-weight: 500;
 `;
 
-const ProfileUserName = styled.span`
+const TitleInfo = styled.span`
   color: #707e88;
   font-size: 13px;
   font-weight: 500;
 `;
 
-const Caption = styled.p`
+const CaptionWrapper = styled.div`
   margin-top: 4px;
   margin-bottom: 4px;
   font-size: 24px;
@@ -99,58 +105,32 @@ const Caption = styled.p`
       line-height: 22px;
       font-weight: 400;
     `};
+  p {
+    margin: 0;
+    padding: 0;
+    a {
+      color: #1da1f2;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 `;
 
 const Image = styled.img`
+  max-height: 250px;
+  flex-basis: 30px;
+  flex-grow: 0;
+`;
+
+const ImageWrapper = styled.div`
   margin-top: 13px;
   margin-bottom: 3px;
   max-width: 100%;
-  max-height: 250px;
-`;
-
-// Link preview
-
-const OGLinkPreview = styled.a`
-  margin-top: 13px;
-  margin-bottom: 3px;
   display: flex;
-
-  flex-direction: row;
-  border: 1px solid #e1e8ed;
-  border-radius: 4px;
-  text-decoration: none;
-  color: #000000;
-`;
-
-const OGLinkImage = styled.img`
-  margin-right: 9px;
-  border-right: 1px solid #e1e8ed;
-  height: 126px;
-`;
-
-const OGLinkTitle = styled.p`
-  margin: 11px 0 0 0;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 22px;
-`;
-
-const OGLinkDescription = styled.p`
-  margin: 0;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-height: 63px;
-`;
-
-const OGLinkURL = styled.p`
-  margin: 0;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 21px;
-  color: #8899a6;
+  flex-flow: row wrap;
+  flex-basis: 30px;
 `;
 
 // Actions block
@@ -185,16 +165,16 @@ const ActionCount = styled.span`
   color: ${({ liked }) => (liked ? '#E2264D' : '#667580')};
 `;
 
-function TweetsNav({ username }) {
+function TweetsNav({ match }) {
   return (
     <NavWrapper>
-      <StNavLink exact to={`/${username}/`}>
-Tweets
+      <StNavLink exact to={`/${match.params.id}/`}>
+        Tweets
       </StNavLink>
-      <StNavLink to={`/${username}/with_replies`}>
+      <StNavLink to={`/${match.params.id}/with_replies`}>
 Tweets & replies
       </StNavLink>
-      <StNavLink to={`/${username}/media`}>
+      <StNavLink to={`/${match.params.id}/media`}>
 Media
       </StNavLink>
     </NavWrapper>
@@ -202,12 +182,30 @@ Media
 }
 export const TweetsNavRoute = withRouter(TweetsNav);
 
+function SmartDate({ date }) {
+  const tweetdate = new Date(date);
+  function hoursminutes(short) {
+    return differenceInHours(Date.now(), short) < 1
+      ? `${differenceInMinutes(Date.now(), short)}m`
+      : `${differenceInHours(Date.now(), short)}h`;
+  }
+  const distance = differenceInHours(Date.now(), tweetdate) < 24
+    ? hoursminutes(tweetdate)
+    : format(tweetdate, 'MMM D');
+  return distance;
+}
+
+function Images({ images }) {
+  const imagescomp = images.map(image => <Image key={image.id} src={image.url} />);
+  return (
+    <ImageWrapper count={images.length}>
+      {imagescomp}
+    </ImageWrapper>
+  );
+}
+
 function Tweet({ tweet }) {
-  const avatarurl = `${process.env.PUBLIC_URL}${tweet.profile.avatar}`;
-  const imageurl = `${process.env.PUBLIC_URL}${tweet.img}`;
-  // const caption = `{
-  //           __html: ${props.tweet.caption}
-  //         }`;
+  const caption = { __html: tweet.content };
   return (
     <MainWrapper>
       {tweet.pinned && (
@@ -220,55 +218,37 @@ Pinned Tweet
       )}
       <ContentWrapper>
         <Header>
-          <TweetAvatar src={avatarurl} />
-          <ProfileFullName>
-            {tweet.profile.fullname}
-          </ProfileFullName>
-          <span>
-&nbsp;
-          </span>
-          <ProfileUserName>
-            {tweet.profile.username}
-          </ProfileUserName>
+          <TweetAvatar src={tweet.account.avatar} />
+          <Title>
+            {tweet.account.display_name}
+            &nbsp;
+          </Title>
+          <TitleInfo>
+            @
+            {tweet.account.username}
+            &nbsp;•&nbsp;
+            <SmartDate date={tweet.created_at} />
+          </TitleInfo>
         </Header>
-        <Caption small={tweet.link}>
-          {tweet.caption}
-        </Caption>
-        {tweet.img && <Image src={imageurl} />}
-        {tweet.link && (
-          <OGLinkPreview href={tweet.link.url}>
-            <OGLinkImage src={tweet.link.image} alt={tweet.link.title} />
-            <div>
-              <OGLinkTitle>
-                {tweet.link.title}
-              </OGLinkTitle>
-              <OGLinkDescription>
-                {tweet.link.description}
-              </OGLinkDescription>
-              <OGLinkURL>
-                {tweet.link.url}
-              </OGLinkURL>
-            </div>
-          </OGLinkPreview>
-        )}
-
+        <CaptionWrapper
+          small={tweet.media_attachments.length || tweet.content.length > 50}
+          dangerouslySetInnerHTML={caption}
+        />
+        {tweet.media_attachments && <Images images={tweet.media_attachments} />}
         <ActionWrapper>
           <ActionBlock to={`${tweet.id}/reply`}>
             <ActionIcon src={replies} />
-            <ActionCount>
-              {tweet.actions.replies}
-            </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/retweet`}>
             <ActionIcon src={retweets} />
             <ActionCount>
-              {tweet.actions.retweets}
+              {tweet.reblogs_count}
             </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/like`}>
-            {tweet.actions.liked ? <ActionIcon src={likesFilled} /> : <ActionIcon src={likes} />}
-            <ActionCount liked={tweet.actions.liked}>
-              {tweet.actions.likes}
+            {tweet.favourited ? <ActionIcon src={likesFilled} /> : <ActionIcon src={likes} />}
+            <ActionCount liked={tweet.favourited}>
+              {tweet.favourites_count}
             </ActionCount>
           </ActionBlock>
           <ActionBlock to={`${tweet.id}/send`}>
@@ -280,7 +260,41 @@ Pinned Tweet
   );
 }
 
-export default function TweetsFeed(props) {
-  const tweetsfeed = props.tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
-  return tweetsfeed;
+class TweetsFeed extends React.Component {
+  state = {
+    tweets: [],
+  };
+
+  componentDidMount() {
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${
+      process.env.REACT_APP_ACCESS_TOKEN
+    }`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(responseAsJson => this.setState({ tweets: responseAsJson }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    const { tweets } = this.state;
+    const tweetsfeed = tweets.error ? (
+      <h1>
+        Error loading tweets:
+        {tweets.error}
+      </h1>
+    ) : (
+      tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />)
+    );
+    return tweetsfeed;
+  }
 }
+
+export default withRouter(TweetsFeed);

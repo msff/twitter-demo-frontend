@@ -14,14 +14,15 @@ import ShowUrl from './EmptyLink';
 
 // Data import
 import {
-  tweets, whotofollow, trends, followersyouknow, userphotos,
+  whotofollow, trends, followersyouknow, userphotos,
 } from './data';
 
 // Header images
 
 const StHeaderImage = styled.img`
-  max-width: 100%;
+  width: 100%;
   max-height: 380px;
+  object-fit: cover;
 `;
 
 const BigAvatar = styled.div`
@@ -38,73 +39,110 @@ const BigAvatar = styled.div`
   background-position: center center;
 `;
 
-function Profile({ match }) {
-  const username = match.params.username;
-  return (
-    <div>
-      <Helmet>
-        <title>
-          {match.params.username}
-          {' '}
-— Twitter
-        </title>
-      </Helmet>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3">
-            <BigAvatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-large.png`} />
-          </div>
-        </div>
-      </div>
-      <StHeaderImage src={`${process.env.PUBLIC_URL}/img/ei-cover.jpg`} alt="everyinteract" />
+class Profile extends React.Component {
+  state = {
+    profile: {},
+  };
 
-      <Stats />
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3 start-lg">
-            <ProfileInfo followers={followersyouknow} userphotos={userphotos} />
-          </div>
-          <div className="col-lg-6 start-lg">
-            <Switch>
-              <Route
-                exact
-                path="/:username/"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <TweetsFeed tweets={tweets} />
-                  </React.Fragment>
-                )}
-              />
-              <Route
-                path="/:username/with_replies"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <ShowUrl />
-                  </React.Fragment>
-                )}
-              />
-              <Route
-                path="/:username/media"
-                render={() => (
-                  <React.Fragment>
-                    <TweetsNavRoute username={username} />
-                    <ShowUrl />
-                  </React.Fragment>
-                )}
-              />
-              <Route path="/:username" component={ShowUrl} />
-            </Switch>
-          </div>
-          <div className="col-lg-3">
-            <Trends trends={trends} />
-            <WhoToFollow whotofollow={whotofollow} />
-          </div>
-        </div>
+  componentDidMount() {
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${
+      process.env.REACT_APP_ACCESS_TOKEN
+    }`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(responseAsJson => this.setState({ profile: responseAsJson }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  render() {
+    const { profile } = this.state;
+    console.log(profile);
+    return (
+      <div>
+        {profile.error && (
+          <h1>
+            Error:&nbsp;
+            {profile.error}
+          </h1>
+        )}
+        {!profile.error && (
+          <React.Fragment>
+            <Helmet>
+              <title>
+                {`${profile.display_name} — Twitter Demo`}
+              </title>
+            </Helmet>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3">
+                  <BigAvatar src={profile.avatar} alt={profile.username} />
+                </div>
+              </div>
+            </div>
+            <StHeaderImage src={profile.header} alt={profile.username} />
+
+            <Stats profile={profile} />
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3 start-lg">
+                  <ProfileInfo
+                    profile={profile}
+                    followers={followersyouknow}
+                    userphotos={userphotos}
+                  />
+                </div>
+                <div className="col-lg-6 start-lg">
+                  <Switch>
+                    <Route
+                      exact
+                      path="/:id/"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute />
+                          <TweetsFeed />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/with_replies"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute username={this.username} />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/media"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute username={this.username} />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route path="/:id" component={ShowUrl} />
+                  </Switch>
+                </div>
+                <div className="col-lg-3">
+                  <Trends trends={trends} />
+                  <WhoToFollow whotofollow={whotofollow} />
+                </div>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default withRouter(Profile);

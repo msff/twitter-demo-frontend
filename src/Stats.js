@@ -46,38 +46,38 @@ const StatsBlock = styled(NavLink)`
   }
 `;
 
-function Stats({ location, match }) {
+function Stats({ profile, match }) {
   return (
     <div>
       <StatsWrapper>
         <div className="container">
           <div className="row middle-lg">
             <div className="col-lg-offset-3 col-lg-6 start-lg">
-              <StatsBlock exact to={`/${match.params.username}/`}>
+              <StatsBlock exact to={`/${match.params.id}/`}>
                 <StatsBlockHeader>
 Tweets
                 </StatsBlockHeader>
                 <StatsBlockValue>
-8,058
+                  {profile.statuses_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/following`}>
+              <StatsBlock to={`/${match.params.id}/following`}>
                 <StatsBlockHeader>
 Following
                 </StatsBlockHeader>
                 <StatsBlockValue>
-721
+                  {profile.following_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/followers`}>
+              <StatsBlock to={`/${match.params.id}/followers`}>
                 <StatsBlockHeader>
 Followers
                 </StatsBlockHeader>
                 <StatsBlockValue>
-1,815
+                  {profile.followers_count}
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/likes`}>
+              {/* <StatsBlock to={`/${match.params.id}/likes`}>
                 <StatsBlockHeader>
 Likes
                 </StatsBlockHeader>
@@ -85,14 +85,14 @@ Likes
 460
                 </StatsBlockValue>
               </StatsBlock>
-              <StatsBlock to={`/${match.params.username}/lists`}>
+              <StatsBlock to={`/${match.params.id}/lists`}>
                 <StatsBlockHeader>
 Lists
                 </StatsBlockHeader>
                 <StatsBlockValue>
 2
                 </StatsBlockValue>
-              </StatsBlock>
+              </StatsBlock> */}
             </div>
             <div className="c col-lg-3 end-lg">
               <ActionButton outline>

@@ -4,7 +4,12 @@
   "rules": {
     "no-unused-vars": "warn",
     "no-var": "error",
+    "no-console": "off",
     "react/jsx-filename-extension": 0,
     "react/prop-types": 0
+  },
+  "env": {
+    "browser": true,
+    "node": true
   }
 }

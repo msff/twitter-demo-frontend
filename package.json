@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "date-fns": "^1.29.0",
     "flexboxgrid2": "^7.2.1",
+    "html-react-parser": "^0.4.6",
+    "now": "^11.2.9",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",

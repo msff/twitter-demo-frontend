@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import Parser from 'html-react-parser';
 import { Link, withRouter } from 'react-router-dom';
+import { format } from 'date-fns';
 
 import verified from './icons/verified.png';
 import iconJoined from './icons/icon-joined.svg';
@@ -152,13 +154,19 @@ function Photos({ userphotos }) {
   return photos;
 }
 
-function ProfileInfo({ match, followers, userphotos }) {
+// const cleanHTML = {
+//   replace: ({ children }) => children,
+// };
+
+function ProfileInfo({
+  match, profile, followers, userphotos,
+}) {
   return (
     <div>
       <SectionWrapper>
         <div>
           <FullName>
-            {match.params.username}
+            {profile.display_name}
           </FullName>
           <span>
 &nbsp;
@@ -167,15 +175,15 @@ function ProfileInfo({ match, followers, userphotos }) {
         </div>
         <div>
           <Username>
-@Every Interact
+            @
+            {profile.username}
           </Username>
           <Follows>
 Follows you
           </Follows>
         </div>
         <Bio>
-          UX Design studio focussed problem solving creativity. Design to us is how can we make
-          things *work* amazing.
+          {profile.note && Parser(profile.note)}
         </Bio>
         <div>
           <UserInfoIcon src={iconLocation} />
@@ -192,7 +200,8 @@ everyinteraction.com
         <div>
           <UserInfoIcon src={iconJoined} />
           <UserInfoSmall>
-Joined May 2008
+            Joined&nbsp;
+            {format(new Date(profile.created_at), 'MMMM YYYY')}
           </UserInfoSmall>
         </div>
         <ButtonWrapper>
