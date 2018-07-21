@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
@@ -9,7 +11,7 @@ import iconMessages from './icons/icon-messages.svg';
 import iconNotifications from './icons/icon-notifications.svg';
 import iconMagnifier from './icons/icon-magnifier.svg';
 
-import { ActionButton } from './Shared';
+import { ActionButton } from './shared/Shared';
 
 const Background = styled.div`
   background-color: #ffffff;
@@ -117,6 +119,7 @@ Messages
 }
 
 function Header() {
+  const publicurl = process.env.PUBLIC_URL || '';
   return (
     <Background>
       <div className="container">
@@ -128,7 +131,7 @@ function Header() {
           <Wrapper>
             <SearchInput placeholder="Search Twitter" />
             <AvatarWrapper to="/">
-              <Avatar src={`${process.env.PUBLIC_URL}/img/ei-avatar-small.jpg`} />
+              <Avatar src={`${publicurl}/img/ei-avatar-small.jpg`} />
             </AvatarWrapper>
             <NavLink to="/newtweet">
               <ActionButton>

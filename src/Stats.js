@@ -1,8 +1,9 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, withRouter } from 'react-router-dom';
 
-import { ActionButton } from './Shared';
+import { ActionButton } from './shared/Shared';
 
 // Stats Block Components
 
@@ -77,22 +78,6 @@ Followers
                   {profile.followers_count}
                 </StatsBlockValue>
               </StatsBlock>
-              {/* <StatsBlock to={`/${match.params.id}/likes`}>
-                <StatsBlockHeader>
-Likes
-                </StatsBlockHeader>
-                <StatsBlockValue>
-460
-                </StatsBlockValue>
-              </StatsBlock>
-              <StatsBlock to={`/${match.params.id}/lists`}>
-                <StatsBlockHeader>
-Lists
-                </StatsBlockHeader>
-                <StatsBlockValue>
-2
-                </StatsBlockValue>
-              </StatsBlock> */}
             </div>
             <div className="c col-lg-3 end-lg">
               <ActionButton outline>

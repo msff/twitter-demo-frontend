@@ -1,8 +1,17 @@
+// @flow
+
+// Dep import
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 
+// Types import
+import type { Match } from 'react-router-dom';
+import type { TweetT } from './shared/types';
+
+
+// Assets import
 import pinned from './icons/icon-pinned.svg';
 import likes from './icons/icon-hearts.svg';
 import likesFilled from './icons/icon-hearts-filled.svg';
@@ -260,7 +269,18 @@ Pinned Tweet
   );
 }
 
-class TweetsFeed extends React.Component {
+// Local types definition
+
+type Props = {
+  match: Match,
+};
+type State = {
+  tweets: TweetT[],
+};
+
+// Components
+
+class TweetsFeed extends React.Component<Props, State> {
   state = {
     tweets: [],
   };
@@ -271,9 +291,11 @@ class TweetsFeed extends React.Component {
         params: { id },
       },
     } = this.props;
-    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${
-      process.env.REACT_APP_ACCESS_TOKEN
-    }`;
+
+    const env = process.env || {};
+    const secretKey = env.REACT_APP_ACCESS_TOKEN;
+    if (!secretKey) throw new Error('missing REACT_APP_ACCESS_TOKEN');
+    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}/statuses?access_token=${secretKey}`;
 
     fetch(url)
       .then(response => response.json())
@@ -285,14 +307,7 @@ class TweetsFeed extends React.Component {
 
   render() {
     const { tweets } = this.state;
-    const tweetsfeed = tweets.error ? (
-      <h1>
-        Error loading tweets:
-        {tweets.error}
-      </h1>
-    ) : (
-      tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />)
-    );
+    const tweetsfeed = tweets.map(tweet => <Tweet key={tweet.id} tweet={tweet} />);
     return tweetsfeed;
   }
 }

@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import {
-  BgSectionWrapper, BgSectionHeaderWrapper, SectionHeader, SectionLink,
-} from './Shared';
+  BgSectionWrapper,
+  BgSectionHeaderWrapper,
+  SectionHeader,
+  SectionLink,
+} from './shared/Shared';
 
 import iconDelete from './icons/icon-delete.svg';
 import verified from './icons/verified.png';
@@ -105,7 +108,8 @@ const MorePeopleIcon = styled.img`
 `;
 
 function WTFItem({ profile }) {
-  const avatarurl = `${process.env.PUBLIC_URL}${profile.avatar}`;
+  const publicurl = process.env.PUBLIC_URL || '';
+  const avatarurl = `${publicurl}${profile.avatar}`;
   return (
     <SingleUser>
       <ItemAvatar src={avatarurl} alt="avatar" />

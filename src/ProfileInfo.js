@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
 import Parser from 'html-react-parser';
@@ -11,7 +12,7 @@ import iconLocation from './icons/icon-location.svg';
 import iconFollowers from './icons/icon-followers.svg';
 import iconPhotos from './icons/icon-photos.svg';
 
-import { SectionSubheader, SectionFlexWrapper } from './Shared';
+import { SectionSubheader, SectionFlexWrapper } from './shared/Shared';
 
 const SectionWrapper = styled.div`
   margin-top: 40px;
@@ -117,7 +118,8 @@ const FollowerAvatar = styled.img`
 `;
 
 function FollowerYouKnowSingle({ follower }) {
-  const avatarurl = `${process.env.PUBLIC_URL}${follower.avatar}`;
+  const publicurl = process.env.PUBLIC_URL || '';
+  const avatarurl = `${publicurl}${follower.avatar}`;
   return (
     <Link to={follower.username}>
       <FollowerAvatar src={avatarurl} alt={follower.user} />
@@ -141,7 +143,8 @@ const PhotoPreview = styled.img`
 `;
 
 function PhotoSingle({ photo }) {
-  const url = `${process.env.PUBLIC_URL}${photo.src}`;
+  const publicurl = process.env.PUBLIC_URL || '';
+  const url = `${publicurl}${photo.src}`;
   return (
     <Link to={url}>
       <PhotoPreview src={url} alt={photo.caption} />
@@ -154,13 +157,7 @@ function Photos({ userphotos }) {
   return photos;
 }
 
-// const cleanHTML = {
-//   replace: ({ children }) => children,
-// };
-
-function ProfileInfo({
-  match, profile, followers, userphotos,
-}) {
+function ProfileInfo({ profile, followers, userphotos }) {
   return (
     <div>
       <SectionWrapper>
