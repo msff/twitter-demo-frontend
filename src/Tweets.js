@@ -114,19 +114,14 @@ const CaptionWrapper = styled.div`
       line-height: 22px;
       font-weight: 400;
     `};
-  > p {
+  p {
     margin: 0;
     padding: 0;
-    > a {
+    a {
       color: #1da1f2;
       text-decoration: none;
       &:hover {
         text-decoration: underline;
-        > span {
-           {
-            props.class === 'invisible' && text-decoration: none;
-          }
-        }
       }
     }
   }
