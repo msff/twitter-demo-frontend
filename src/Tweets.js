@@ -193,6 +193,7 @@ export const TweetsNavRoute = withRouter(TweetsNav);
 
 function SmartDate({ date }) {
   const tweetdate = new Date(date);
+  console.log(tweetdate);
   function hoursminutes(short) {
     return differenceInHours(Date.now(), short) < 1
       ? `${differenceInMinutes(Date.now(), short)}m`
