@@ -5,8 +5,14 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
-// Types import
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
 import type { Match } from 'react-router-dom';
+import { fetchRequest, fetchSuccess, fetchError } from './redux';
+
+// Types import
 import type { Account } from './shared/types';
 
 // Owned components import
@@ -22,8 +28,9 @@ import {
   whotofollow, trends, followersyouknow, userphotos,
 } from './data';
 
-// Header images
+// Redux store
 
+// Header images
 const StHeaderImage = styled.img`
   width: 100%;
   max-height: 380px;
@@ -48,120 +55,179 @@ const BigAvatar = styled.div`
 
 type Props = {
   match: Match,
+  profile: Account,
 };
 type State = {
   profile: Account,
 };
 
-class Profile extends React.Component<Props, State> {
-  state = {
-    profile: {
-      id: 0,
-      username: null,
-      acct: null,
-      display_name: null,
-      locked: false,
-      bot: false,
-      created_at: null,
-      note: null,
-      url: null,
-      avatar: null,
-      avatar_static: null,
-      header: null,
-      header_static: null,
-      followers_count: 0,
-      following_count: 0,
-      statuses_count: 0,
-      emojis: [],
-      fields: [],
-    },
+// Redux
+
+const reducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return state;
+    case 'FETCH_SUCCESS':
+      return { ...state, profile: action.profile };
+    default:
+      return state;
+  }
+};
+
+function fetchProfile(id) {
+  const env = process.env || {};
+  const secretKey = env.REACT_APP_ACCESS_TOKEN;
+  if (!secretKey) throw new Error('missing REACT_APP_ACCESS_TOKEN');
+  const URL = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${secretKey}`;
+  return fetch(URL).then(response => Promise.all([response, response.json()]));
+}
+
+function fetchWithRedux(id) {
+  return (dispatch) => {
+    dispatch(fetchRequest());
+    return fetchProfile(id).then(([response, json]) => {
+      if (response.status === 200) {
+        dispatch(fetchSuccess(json));
+      } else {
+        dispatch(fetchError());
+      }
+    });
   };
+}
+
+const store = createStore(reducer, applyMiddleware(thunk));
+
+function mapStateToProps(state) {
+  return {
+    profile: state.profile,
+  };
+}
+
+// Profile component
+
+class Profile extends React.Component<Props, State> {
+  // props = {
+  //   match: {},
+  //   profile: {
+  //     id: 0,
+  //     username: null,
+  //     acct: null,
+  //     display_name: null,
+  //     locked: false,
+  //     bot: false,
+  //     created_at: null,
+  //     note: null,
+  //     url: null,
+  //     avatar: null,
+  //     avatar_static: null,
+  //     header: null,
+  //     header_static: null,
+  //     followers_count: 0,
+  //     following_count: 0,
+  //     statuses_count: 0,
+  //     emojis: [],
+  //     fields: [],
+  //   },
+  // };
 
   componentDidMount() {
-    const {
-      match: {
-        params: { id },
-      },
-    } = this.props;
-
-    const env = process.env || {};
-    const secretKey = env.REACT_APP_ACCESS_TOKEN;
-    if (!secretKey) throw new Error('missing REACT_APP_ACCESS_TOKEN');
-    const url = `https://twitter-demo.erodionov.ru/api/v1/accounts/${id}?access_token=${secretKey}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(responseAsJson => this.setState({ profile: responseAsJson }))
-      .catch((error) => {
-        console.log(error);
-      });
+    const { match } = this.props;
+    const { id } = match.params;
+    fetchWithRedux(id);
   }
 
   render() {
-    const { profile } = this.state;
+    const { profile } = this.props;
     return (
       <React.Fragment>
-        <Helmet>
-          <title>
-            {`${profile.display_name} — Twitter Demo`}
-          </title>
-        </Helmet>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3">
-              <BigAvatar src={profile.avatar} alt={profile.username} />
+        {!profile && (
+        <h1>
+No Profile
+        </h1>
+        )}
+        {profile && (
+          <div>
+            <Helmet>
+              <title>
+                {`${profile.display_name} — Twitter Demo`}
+              </title>
+            </Helmet>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3">
+                  <BigAvatar src={profile.avatar} alt={profile.username} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <StHeaderImage src={profile.header} alt={profile.username} />
+            <StHeaderImage src={profile.header} alt={profile.username} />
 
-        <Stats profile={profile} />
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-3 start-lg">
-              <ProfileInfo profile={profile} followers={followersyouknow} userphotos={userphotos} />
-            </div>
-            <div className="col-lg-6 start-lg">
-              <Switch>
-                <Route
-                  exact
-                  path="/:id/"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute />
-                      <TweetsFeed />
-                    </React.Fragment>
-                  )}
-                />
-                <Route
-                  path="/:id/with_replies"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute />
-                      <ShowUrl />
-                    </React.Fragment>
-                  )}
-                />
-                <Route
-                  path="/:id/media"
-                  render={() => (
-                    <React.Fragment>
-                      <TweetsNavRoute />
-                      <ShowUrl />
-                    </React.Fragment>
-                  )}
-                />
-                <Route path="/:id" component={ShowUrl} />
-              </Switch>
-            </div>
-            <div className="col-lg-3">
-              <Trends trends={trends} />
-              <WhoToFollow whotofollow={whotofollow} />
+            <Stats profile={store.profile} />
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-3 start-lg">
+                  <ProfileInfo
+                    profile={profile}
+                    followers={followersyouknow}
+                    userphotos={userphotos}
+                  />
+                </div>
+                <div className="col-lg-6 start-lg">
+                  <Switch>
+                    <Route
+                      exact
+                      path="/:id/"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute />
+                          <TweetsFeed />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/with_replies"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route
+                      path="/:id/media"
+                      render={() => (
+                        <React.Fragment>
+                          <TweetsNavRoute />
+                          <ShowUrl />
+                        </React.Fragment>
+                      )}
+                    />
+                    <Route path="/:id" component={ShowUrl} />
+                  </Switch>
+                </div>
+                <div className="col-lg-3">
+                  <Trends trends={trends} />
+                  <WhoToFollow whotofollow={whotofollow} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </React.Fragment>
     );
   }
 }
 
-export default withRouter(Profile);
+const ProfileWithFetch = connect(
+  mapStateToProps,
+  { fetchWithRedux },
+)(withRouter(Profile));
+
+function ProfileProvider() {
+  return (
+    <Provider store={store}>
+      <ProfileWithFetch />
+    </Provider>
+  );
+}
+
+export default withRouter(ProfileProvider);
